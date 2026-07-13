@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0f766e" />
+  <title>Volleyball-Turnierverwaltung</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>🏐 Volleyball-Turnier</h1>
+      <p id="subtitle">TTC Geltendorf</p>
+    </div>
+    <button id="menuBtn" class="icon-btn" aria-label="Menü">☰</button>
+  </header>
+
+  <nav id="nav" class="nav">
+    <button data-view="setup" class="active">Start</button>
+    <button data-view="teams">Teams</button>
+    <button data-view="schedule">Spielplan</button>
+    <button data-view="results">Ergebnisse</button>
+    <button data-view="table">Live-Tabelle</button>
+    <button data-view="partners">Partner</button>
+    <button data-view="fairness">Fairness</button>
+  </nav>
+
+  <main>
+    <section id="view-setup" class="view active">
+      <div class="hero card">
+        <h2>Turnier einrichten</h2>
+        <div class="grid two">
+          <label>Turniername<input id="tournamentName" value="Volleyball-Gauditurnier TTC Geltendorf"></label>
+          <label>Datum<input id="tournamentDate" type="date"></label>
+          <label>Anzahl Dreier-Teams<select id="teamCount"><option>9</option><option>10</option><option selected>11</option><option>12</option><option>13</option></select></label>
+          <label>Siegerehrung<input id="awardTime" type="time" value="17:00"></label>
+        </div>
+        <div class="actions">
+          <button id="applySetup" class="primary">Übernehmen & Teams öffnen</button>
+          <button id="resetApp" class="danger ghost">Daten zurücksetzen</button>
+        </div>
+      </div>
+      <div class="card info-grid" id="summaryCards"></div>
+    </section>
+
+    <section id="view-teams" class="view">
+      <div class="section-head"><div><h2>Teams</h2><p>Nur die ausgewählte Anzahl wird angezeigt.</p></div><button id="fillDemo" class="ghost">Beispielnamen</button></div>
+      <div id="teamList" class="team-list"></div>
+    </section>
+
+    <section id="view-schedule" class="view">
+      <div class="section-head"><div><h2>Spielplan</h2><p>Zweizeilige Darstellung je Partie.</p></div><button onclick="window.print()" class="ghost">Drucken</button></div>
+      <div id="schedule"></div>
+    </section>
+
+    <section id="view-results" class="view">
+      <div class="section-head"><div><h2>Ergebnisse</h2><p>Bei Gleichstand bitte Entscheidungsball spielen.</p></div></div>
+      <div id="results"></div>
+    </section>
+
+    <section id="view-table" class="view">
+      <div class="section-head"><div><h2>Live-Tabelle</h2><p>Sortierung nach Punkten und Differenz. Gleiche Werte ergeben denselben Platz.</p></div></div>
+      <div class="table-wrap"><table><thead><tr><th>Platz</th><th>Team</th><th>Sp.</th><th>S</th><th>N</th><th>Pkt.</th><th>BP</th><th>GP</th><th>Diff.</th></tr></thead><tbody id="standings"></tbody></table></div>
+    </section>
+
+    <section id="view-partners" class="view">
+      <div class="section-head"><div><h2>Partner- & Gegnerübersicht</h2></div></div>
+      <div id="partners"></div>
+    </section>
+
+    <section id="view-fairness" class="view">
+      <div class="section-head"><div><h2>Fairnessprüfung</h2><p>Partner, Gegner, Plätze und Pausen im Überblick.</p></div></div>
+      <div id="fairness"></div>
+    </section>
+  </main>
+
+  <footer>Lokale Speicherung auf diesem Gerät · Export/Import folgt in einer späteren Version</footer>
+  <script src="app.js"></script>
+</body>
+</html>

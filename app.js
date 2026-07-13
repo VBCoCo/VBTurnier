@@ -1,0 +1,69 @@
+(function(){
+'use strict';
+var STORAGE='volleyballTurnierV3';
+var state={teamCount:11,name:'Volleyball-Gauditurnier TTC Geltendorf',date:'',awardTime:'17:00',teams:[],scores:{},view:'setup'};
+var plans={};
+
+function cyclicPartners(n,k){var games=[];for(var t=0;t<k;t++){for(var i=1;i<=n;i++){var p=((i+t)%n)+1;if(i<p)games.push([i,p]);}}return games}
+function makePlan(n){
+  var gamesPerTeam=n===12?7:8, total=n*gamesPerTeam/4, rounds=n===9?9:11, slots=n===13?3:2;
+  if(n===10) rounds=10;
+  var partnerPairs=cyclicPartners(n,gamesPerTeam), used={}, matches=[];
+  function key(a,b){return a<b?a+'-'+b:b+'-'+a}
+  for(var r=0;r<rounds;r++){
+    var active={};
+    for(var s=0;s<slots;s++){
+      var candidates=[];
+      for(var a=0;a<partnerPairs.length;a++){
+        var p1=partnerPairs[a]; if(used[key(p1[0],p1[1])])continue;
+        for(var b=a+1;b<partnerPairs.length;b++){
+          var p2=partnerPairs[b]; if(used[key(p2[0],p2[1])])continue;
+          var all=[p1[0],p1[1],p2[0],p2[1]]; if(new Set(all).size<4)continue;
+          if(all.some(function(x){return active[x]}))continue;
+          candidates.push([p1,p2]);
+        }
+      }
+      if(!candidates.length)break;
+      var pick=candidates[(r*slots+s)%candidates.length];
+      used[key(pick[0][0],pick[0][1])]=1;used[key(pick[1][0],pick[1][1])]=1;
+      pick[0].concat(pick[1]).forEach(function(x){active[x]=1});
+      matches.push({round:r+1,slot:s,a:pick[0],b:pick[1]});
+      if(matches.length>=total)break;
+    }
+    if(matches.length>=total)break;
+  }
+  // fallback deterministic matching until total reached
+  var idx=0;
+  while(matches.length<total && idx<5000){
+    var p1=partnerPairs[idx%partnerPairs.length],p2=partnerPairs[(idx*7+3)%partnerPairs.length];idx++;
+    if(new Set(p1.concat(p2)).size<4)continue;
+    if(matches.some(function(m){return key(m.a[0],m.a[1])===key(p1[0],p1[1])||key(m.b[0],m.b[1])===key(p1[0],p1[1])||key(m.a[0],m.a[1])===key(p2[0],p2[1])||key(m.b[0],m.b[1])===key(p2[0],p2[1])}))continue;
+    matches.push({round:Math.floor(matches.length/slots)+1,slot:matches.length%slots,a:p1,b:p2});
+  }
+  var start=600, lunchStart=745, lunch=60, dur=n===9?30:25, gap=5;
+  matches.forEach(function(m){var rr=m.round-1;var minute=start+rr*(dur+gap);if(minute>=lunchStart)minute+=lunch;var h=Math.floor(minute/60),mi=minute%60;var end=minute+dur;var eh=Math.floor(end/60),em=end%60;m.time=pad(h)+':'+pad(mi)+'–'+pad(eh)+':'+pad(em);m.field=m.slot===0?'Sand':(m.slot===1?'Rasen 1':'Rasen 2');});
+  return {n:n,gamesPerTeam:gamesPerTeam,rounds:rounds,slots:slots,duration:dur,matches:matches};
+}
+function pad(x){return String(x).padStart(2,'0')}
+[9,10,11,12,13].forEach(function(n){plans[n]=makePlan(n)});
+function load(){try{var x=localStorage.getItem(STORAGE);if(x)state=Object.assign(state,JSON.parse(x));}catch(e){} ensureTeams();}
+function save(){try{localStorage.setItem(STORAGE,JSON.stringify(state));}catch(e){}}
+function ensureTeams(){while(state.teams.length<13)state.teams.push({name:'',players:['','','']});}
+function teamName(i){return state.teams[i-1]&&state.teams[i-1].name?state.teams[i-1].name:'Team '+i}
+function qs(s){return document.querySelector(s)}function qsa(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
+function show(view){state.view=view; qsa('.view').forEach(function(x){x.classList.remove('active')});qs('#view-'+view).classList.add('active');qsa('.nav button').forEach(function(x){x.classList.toggle('active',x.dataset.view===view)});qs('#nav').classList.remove('open');render(view);save();window.scrollTo(0,0)}
+function render(view){if(view==='setup')renderSetup();if(view==='teams')renderTeams();if(view==='schedule')renderSchedule();if(view==='results')renderResults();if(view==='table')renderTable();if(view==='partners')renderPartners();if(view==='fairness')renderFairness();}
+function renderSetup(){qs('#tournamentName').value=state.name;qs('#tournamentDate').value=state.date;qs('#teamCount').value=state.teamCount;qs('#awardTime').value=state.awardTime;qs('#subtitle').textContent=state.name;var p=plans[state.teamCount];qs('#summaryCards').innerHTML='<div class="stat"><b>'+state.teamCount+'</b><span>Dreier-Teams</span></div><div class="stat"><b>'+p.matches.length+'</b><span>Partien</span></div><div class="stat"><b>'+p.gamesPerTeam+'</b><span>Spiele je Team</span></div><div class="stat"><b>'+p.duration+' min</b><span>Spielzeit</span></div>'}
+function renderTeams(){var h='';for(var i=1;i<=state.teamCount;i++){var t=state.teams[i-1];h+='<div class="team-row"><div class="team-no">Team '+i+'</div><input data-team="'+i+'" data-field="name" placeholder="Teamname" value="'+esc(t.name)+'"><input data-team="'+i+'" data-player="0" placeholder="Spieler 1" value="'+esc(t.players[0])+'"><input data-team="'+i+'" data-player="1" placeholder="Spieler 2" value="'+esc(t.players[1])+'"><input data-team="'+i+'" data-player="2" placeholder="Spieler 3" value="'+esc(t.players[2])+'"></div>'}qs('#teamList').innerHTML=h;qsa('#teamList input').forEach(function(inp){inp.addEventListener('input',function(){var i=+this.dataset.team-1;if(this.dataset.field==='name')state.teams[i].name=this.value;else state.teams[i].players[+this.dataset.player]=this.value;save()})})}
+function groupRounds(){var g={};plans[state.teamCount].matches.forEach(function(m){(g[m.round]=g[m.round]||[]).push(m)});return g}
+function renderSchedule(){var g=groupRounds(),h='';Object.keys(g).forEach(function(r){h+='<div class="round"><div class="round-title">Runde '+r+'</div>';for(var s=0;s<plans[state.teamCount].slots;s++){var m=g[r].find(function(x){return x.slot===s});if(!m){var fname=s===0?'Sand':(s===1?'Rasen 1':'Rasen 2');h+='<div class="match free"><div class="match-head"><span>'+fname+'</span><span>—</span><span>FREI</span></div><div class="match-body"><div class="side">Platz nicht belegt</div></div></div>';continue}var cls=m.field==='Sand'?'sand':'grass';h+='<div class="match '+cls+'"><div class="match-head"><span>'+m.field+'</span><span>'+m.time+'</span><span>Spiel '+(plans[state.teamCount].matches.indexOf(m)+1)+'</span></div><div class="match-body"><div class="side"><div>'+teamName(m.a[0])+'</div><div>'+teamName(m.a[1])+'</div></div><div class="versus">gegen</div><div class="side"><div>'+teamName(m.b[0])+'</div><div>'+teamName(m.b[1])+'</div></div></div></div>'}h+='</div>'});qs('#schedule').innerHTML=h}
+function renderResults(){var h='';plans[state.teamCount].matches.forEach(function(m,i){var sc=state.scores[state.teamCount+'-'+i]||['',''];var status='';if(sc[0]!==''&&sc[1]!==''){status=+sc[0]===+sc[1]?'<span class="warning">Entscheidungsball!</span>':'<span class="winner">'+(+sc[0]>+sc[1]?'Sieger: '+teamName(m.a[0])+' + '+teamName(m.a[1]):'Sieger: '+teamName(m.b[0])+' + '+teamName(m.b[1]))+'</span>'}h+='<div class="result-row"><b>R'+m.round+'</b><span>'+m.field+'</span><span>'+teamName(m.a[0])+' + '+teamName(m.a[1])+'</span><input inputmode="numeric" data-i="'+i+'" data-s="0" value="'+sc[0]+'"><b>:</b><input inputmode="numeric" data-i="'+i+'" data-s="1" value="'+sc[1]+'"><span class="away">'+teamName(m.b[0])+' + '+teamName(m.b[1])+'<br>'+status+'</span></div>'});qs('#results').innerHTML=h;qsa('#results input').forEach(function(inp){inp.addEventListener('input',function(){var k=state.teamCount+'-'+this.dataset.i;var a=state.scores[k]||['',''];a[+this.dataset.s]=this.value.replace(/[^0-9]/g,'');state.scores[k]=a;save();renderResults()})})}
+function standings(){var arr=[];for(var i=1;i<=state.teamCount;i++)arr.push({id:i,name:teamName(i),gp:0,w:0,l:0,p:0,bp:0,ga:0,d:0});plans[state.teamCount].matches.forEach(function(m,idx){var s=state.scores[state.teamCount+'-'+idx];if(!s||s[0]===''||s[1]===''||+s[0]===+s[1])return;var a=+s[0],b=+s[1],idsA=m.a,idsB=m.b;idsA.forEach(function(id){var t=arr[id-1];t.gp++;t.bp+=a;t.ga+=b;if(a>b){t.w++;t.p++}else t.l++});idsB.forEach(function(id){var t=arr[id-1];t.gp++;t.bp+=b;t.ga+=a;if(b>a){t.w++;t.p++}else t.l++})});arr.forEach(function(t){t.d=t.bp-t.ga});arr.sort(function(a,b){return b.p-a.p||b.d-a.d||a.id-b.id});var rank=0,last=null;arr.forEach(function(t,i){if(!last||t.p!==last.p||t.d!==last.d)rank=i+1;t.rank=rank;last=t});return arr}
+function renderTable(){qs('#standings').innerHTML=standings().map(function(t){var c=t.rank===1?'rank1':t.rank===2?'rank2':t.rank===3?'rank3':'';return '<tr class="'+c+'"><td><b>'+t.rank+'</b></td><td>'+esc(t.name)+'</td><td>'+t.gp+'</td><td>'+t.w+'</td><td>'+t.l+'</td><td><b>'+t.p+'</b></td><td>'+t.bp+'</td><td>'+t.ga+'</td><td>'+t.d+'</td></tr>'}).join('')}
+function stats(){var n=state.teamCount,p=plans[n],x=[];for(var i=1;i<=n;i++)x.push({id:i,partners:[],opps:[],sand:0,grass:0,rounds:[]});p.matches.forEach(function(m){var allA=m.a,allB=m.b;allA.forEach(function(id){x[id-1].partners.push(allA.find(function(v){return v!==id}));x[id-1].opps=x[id-1].opps.concat(allB);x[id-1].rounds.push(m.round);m.field==='Sand'?x[id-1].sand++:x[id-1].grass++});allB.forEach(function(id){x[id-1].partners.push(allB.find(function(v){return v!==id}));x[id-1].opps=x[id-1].opps.concat(allA);x[id-1].rounds.push(m.round);m.field==='Sand'?x[id-1].sand++:x[id-1].grass++})});return x}
+function renderPartners(){var h='';stats().forEach(function(t){var oppCount={};t.opps.forEach(function(o){oppCount[o]=(oppCount[o]||0)+1});h+='<div class="partner-card"><b>'+teamName(t.id)+'</b><div class="chips"><span class="chip">Partner: '+t.partners.map(teamName).join(', ')+'</span></div><div class="chips">'+Object.keys(oppCount).map(function(o){return '<span class="chip">'+teamName(+o)+' × '+oppCount[o]+'</span>'}).join('')+'</div></div>'});qs('#partners').innerHTML=h}
+function renderFairness(){var h='';stats().forEach(function(t){var uniqueP=new Set(t.partners).size,uniqueO=new Set(t.opps).size,maxO=0,c={};t.opps.forEach(function(o){c[o]=(c[o]||0)+1;maxO=Math.max(maxO,c[o])});var rs=t.rounds.slice().sort(function(a,b){return a-b}),maxSeries=1,cur=1,maxPause=0;for(var i=1;i<rs.length;i++){if(rs[i]===rs[i-1]+1){cur++;maxSeries=Math.max(maxSeries,cur)}else{maxPause=Math.max(maxPause,rs[i]-rs[i-1]-1);cur=1}}var ok=uniqueP===plans[state.teamCount].gamesPerTeam;h+='<div class="fair-card"><b>'+teamName(t.id)+'</b><div class="chips"><span class="chip">Spiele '+t.partners.length+'</span><span class="chip">Partner '+uniqueP+'</span><span class="chip">Gegner '+uniqueO+'</span><span class="chip">max. Gegnerhäufigkeit '+maxO+'</span><span class="chip">Sand '+t.sand+'</span><span class="chip">Rasen '+t.grass+'</span><span class="chip">längste Serie '+maxSeries+'</span><span class="chip">längste Pause '+maxPause+'</span><span class="'+(ok?'ok':'bad')+'">'+(ok?'✓ keine Partnerwiederholung':'⚠ Partnerwiederholung')+'</span></div></div>'});qs('#fairness').innerHTML=h}
+function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function bind(){qsa('.nav button').forEach(function(b){b.onclick=function(){show(this.dataset.view)}});qs('#menuBtn').onclick=function(){qs('#nav').classList.toggle('open')};qs('#applySetup').onclick=function(){state.name=qs('#tournamentName').value||'Volleyballturnier';state.date=qs('#tournamentDate').value;state.teamCount=+qs('#teamCount').value;state.awardTime=qs('#awardTime').value;save();show('teams')};qs('#resetApp').onclick=function(){if(confirm('Alle lokal gespeicherten Daten löschen?')){try{localStorage.removeItem(STORAGE)}catch(e){}location.reload()}};qs('#fillDemo').onclick=function(){for(var i=0;i<state.teamCount;i++)state.teams[i].name='Team '+(i+1);save();renderTeams()}}
+load();bind();show(state.view||'setup');if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(function(){})}
+})();
