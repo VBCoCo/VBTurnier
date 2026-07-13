@@ -36,6 +36,19 @@
           <label>Datum<input id="tournamentDate" type="date"></label>
           <label>Anzahl Dreier-Teams<select id="teamCount"><option>9</option><option>10</option><option selected>11</option><option>12</option><option>13</option></select></label>
           <label>Siegerehrung<input id="awardTime" type="time" value="17:00"></label>
+          <label class="check-label"><input id="usePlayerNames" type="checkbox"> Spielernamen erfassen</label>
+        </div>
+        <div class="cloud-box">
+          <h3>Gemeinsamer Turnierstand</h3>
+          <p>Mit demselben Turniercode greifen mehrere Geräte auf denselben Stand zu.</p>
+          <div class="grid two">
+            <label>Turniercode<input id="tournamentCode" placeholder="z. B. GELTENDORF-2026" autocapitalize="characters"></label>
+            <div class="cloud-status-wrap"><span id="cloudStatus" class="cloud-status">Nur lokal</span></div>
+          </div>
+          <div class="actions compact">
+            <button id="cloudConnect" class="ghost">Cloud verbinden / laden</button>
+            <button id="cloudSave" class="ghost">Jetzt synchronisieren</button>
+          </div>
         </div>
         <div class="actions">
           <button id="applySetup" class="primary">Übernehmen & Teams öffnen</button>
@@ -46,7 +59,7 @@
     </section>
 
     <section id="view-teams" class="view">
-      <div class="section-head"><div><h2>Teams</h2><p>Nur die ausgewählte Anzahl wird angezeigt.</p></div><button id="fillDemo" class="ghost">Beispielnamen</button></div>
+      <div class="section-head"><div><h2>Teams</h2><p>Nur die ausgewählte Anzahl wird angezeigt. Spielernamen sind optional.</p></div><button id="fillDemo" class="ghost">Beispielnamen</button></div>
       <div id="teamList" class="team-list"></div>
     </section>
 
@@ -76,7 +89,8 @@
     </section>
   </main>
 
-  <footer>Lokale Speicherung auf diesem Gerät · Export/Import folgt in einer späteren Version</footer>
+  <footer>Lokale Speicherung auf diesem Gerät · optional gemeinsame Cloud-Synchronisierung</footer>
+  <script src="config.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
