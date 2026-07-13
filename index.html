@@ -14,7 +14,7 @@
       <h1>🏐 Volleyball-Turnier</h1>
       <p id="subtitle">TTC Geltendorf</p>
     </div>
-    <button id="menuBtn" class="icon-btn" aria-label="Menü">☰</button>
+    <div class="top-actions"><button id="infoBtn" class="icon-btn" aria-label="Versionsinformationen" title="Versionsinformationen">ⓘ</button><button id="menuBtn" class="icon-btn" aria-label="Menü">☰</button></div>
   </header>
 
   <nav id="nav" class="nav">
@@ -89,7 +89,32 @@
     </section>
   </main>
 
-  <footer>Lokale Speicherung auf diesem Gerät · optional gemeinsame Cloud-Synchronisierung</footer>
+  <footer>Lokale Speicherung auf diesem Gerät · optional gemeinsame Cloud-Synchronisierung · <button id="footerVersion" class="version-link" type="button">Version 1.1.0</button></footer>
+
+  <div id="infoModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
+    <div class="modal-backdrop" data-close-info></div>
+    <div class="modal-card">
+      <button id="infoClose" class="modal-close" type="button" aria-label="Schließen">×</button>
+      <div class="version-badge">Aktuelle Version</div>
+      <h2 id="infoTitle">Volleyball-Turnierverwaltung</h2>
+      <dl class="version-details">
+        <div><dt>Version</dt><dd id="versionNumber">1.1.0</dd></div>
+        <div><dt>Veröffentlicht</dt><dd id="versionDate">13. Juli 2026</dd></div>
+        <div><dt>Build</dt><dd id="versionBuild">2026.07.13-1</dd></div>
+      </dl>
+      <h3>Neu in dieser Version</h3>
+      <ul class="version-changes">
+        <li>Info-Popup mit Versionsnummer, Datum und Build-Kennung</li>
+        <li>Button zum Prüfen und Laden der neuesten veröffentlichten Version</li>
+        <li>Verbessertes Cache-Verhalten für GitHub Pages und iPhone Safari</li>
+      </ul>
+      <p class="version-note">Stimmen Version und Build mit der veröffentlichten Fassung überein, ist die aktuelle Live-Version geladen.</p>
+      <div class="actions compact">
+        <button id="checkUpdateBtn" class="primary" type="button">Aktuelle Version neu laden</button>
+        <button id="closeInfoBtn" class="ghost" type="button">Schließen</button>
+      </div>
+    </div>
+  </div>
   <script src="config.js"></script>
   <script src="app.js"></script>
 </body>

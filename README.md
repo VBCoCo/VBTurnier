@@ -1,3 +1,12 @@
+# Volleyball-Turnierverwaltung – Version 1.1.0
+
+Veröffentlicht: 13. Juli 2026  
+Build: `2026.07.13-1`
+
+Diese Version enthält ein Info-Popup. Es lässt sich oben rechts über **ⓘ** oder unten über den Versionslink öffnen.
+
+Der Button **„Aktuelle Version neu laden“** aktualisiert den Service Worker, leert alte App-Caches und lädt die veröffentlichte Fassung neu.
+
 # Volleyball-Turnierverwaltung
 
 ## GitHub Pages
