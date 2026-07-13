@@ -36,3 +36,15 @@ main{max-width:1180px;margin:0 auto;padding:18px}.view{display:none}.view.active
 .version-changes{padding-left:1.25rem;color:#334155}
 .version-note{background:#fefce8;border:1px solid #fde68a;border-radius:12px;padding:.75rem;color:#713f12}
 @media(max-width:600px){.version-details{grid-template-columns:1fr}.modal-card{border-radius:16px;padding:1.1rem}.top-actions{gap:.25rem}}
+
+/* Ergebnisdarstellung Version 1.2.0 */
+.result-row{display:none}
+.result-card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:12px;box-shadow:0 4px 14px rgba(16,52,46,.04)}
+.result-head{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;align-items:center;padding:10px 12px;background:#eef6f4;font-weight:800;color:var(--teal2)}
+.result-body{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:14px;padding:16px}
+.result-team{display:flex;flex-direction:column;gap:8px;text-align:center;font-weight:800;font-size:1.02rem;line-height:1.25}
+.score-box{display:grid;grid-template-columns:72px 22px 72px;align-items:center;gap:4px}
+.score-box input{margin:0;text-align:center;font-size:1.15rem;font-weight:800;min-height:50px;padding:8px}
+.score-box b{text-align:center;font-size:1.3rem}
+.result-status{text-align:center;min-height:22px;padding:0 12px 12px}
+@media(max-width:600px){.result-head{grid-template-columns:1fr 1fr 1.25fr;font-size:.82rem}.result-body{grid-template-columns:1fr;gap:12px;padding:14px}.score-box{justify-content:center;grid-row:2}.result-team.home{grid-row:1}.result-team.away{grid-row:3}.result-team{font-size:1rem}.score-box input{width:72px}.result-status{padding-bottom:14px}}

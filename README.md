@@ -1,3 +1,5 @@
+Version 1.2.0 – korrigierte faire Spielpläne und mobile Ergebnisansicht.
+
 # Volleyball-Turnierverwaltung – Version 1.1.0
 
 Veröffentlicht: 13. Juli 2026  
