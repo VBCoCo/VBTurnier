@@ -1,40 +1,31 @@
-Version 1.2.0 – korrigierte faire Spielpläne und mobile Ergebnisansicht.
+# Volleyball-Turnierverwaltung – Version 1.3.0
 
-# Volleyball-Turnierverwaltung – Version 1.1.0
+## Veröffentlichung auf GitHub Pages
 
-Veröffentlicht: 13. Juli 2026  
-Build: `2026.07.13-1`
+Den gesamten Inhalt dieses Ordners in das bestehende GitHub-Repository hochladen und die vorhandenen Dateien ersetzen. Danach in der App über das Info-Symbol prüfen:
 
-Diese Version enthält ein Info-Popup. Es lässt sich oben rechts über **ⓘ** oder unten über den Versionslink öffnen.
+- Version: 1.3.0
+- Build: 2026.07.14-1
 
-Der Button **„Aktuelle Version neu laden“** aktualisiert den Service Worker, leert alte App-Caches und lädt die veröffentlichte Fassung neu.
+## Turnier laden
 
-# Volleyball-Turnierverwaltung
+1. Auf der Startseite den Turniercode eingeben.
+2. **Turnier laden** drücken.
+3. Der gespeicherte Turniername, das Datum, die Teamzahl, Teams und Ergebnisse werden aus Supabase geladen.
 
-## GitHub Pages
-Alle Dateien dieses Ordners in das GitHub-Repository hochladen. Danach GitHub Pages fuer den Branch `main` und den Ordner `/root` aktivieren.
+## Turnier speichern
 
-## Gemeinsamer Datenstand auf mehreren Geraeten
-GitHub Pages ist statisch und kann selbst keine Turnierdaten speichern. Die App unterstuetzt deshalb optional Supabase als kleinen Cloud-Datenspeicher.
+1. Turniername, Datum, Teamzahl und Turniercode eintragen oder ändern.
+2. **Turnier speichern** drücken.
+3. Die Daten werden lokal und in Supabase gespeichert; anschließend öffnet sich die Teamseite.
 
-1. Kostenloses Projekt auf Supabase anlegen.
-2. Im SQL Editor den Inhalt von `supabase_setup.sql` ausfuehren.
-3. In Supabase unter Project Settings / API die Project URL und den anon public key kopieren.
-4. In `config.js` beide Werte eintragen:
+Die Schaltfläche **Nur lokal speichern & Teams öffnen** speichert nur auf dem gerade verwendeten Gerät.
 
-```js
-window.TURNIER_CLOUD_CONFIG = {
-  supabaseUrl: 'https://IHR-PROJEKT.supabase.co',
-  supabaseAnonKey: 'IHR-ANON-KEY'
-};
-```
+## Zeitmodell
 
-5. Geaenderte `config.js` wieder zu GitHub hochladen.
-6. In der App auf allen Geraeten denselben schwer erratbaren Turniercode eingeben und `Cloud verbinden / laden` waehlen.
+- 9 Teams: 30 Minuten Spielzeit, 5 Minuten Wechselpause
+- 10 bis 13 Teams: 20 Minuten Spielzeit, 10 Minuten Wechselpause
 
-Die App speichert weiterhin zusaetzlich lokal. Cloud-Aenderungen werden automatisch gespeichert und etwa alle 5 Sekunden auf anderen geoeffneten Geraeten geladen.
+## Supabase
 
-## Hinweise
-- Spielernamen sind optional und koennen auf der Startseite ein- oder ausgeblendet werden.
-- Ein Turniercode ist kein echtes Benutzerkonto. Verwenden Sie daher einen nicht leicht erratbaren Code und keine sensiblen personenbezogenen Daten.
-- Fuer eine spaetere oeffentliche Nutzung waeren Benutzeranmeldung und strengere Zugriffsregeln sinnvoll.
+Die bestehende `config.js` mit Supabase-URL und öffentlichem Anon-Key unverändert weiterverwenden. Falls die Datenbank noch nicht eingerichtet ist, `supabase_setup.sql` einmal im SQL-Editor des Supabase-Projekts ausführen.

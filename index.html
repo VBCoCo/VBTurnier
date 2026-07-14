@@ -46,12 +46,12 @@
             <div class="cloud-status-wrap"><span id="cloudStatus" class="cloud-status">Nur lokal</span></div>
           </div>
           <div class="actions compact">
-            <button id="cloudConnect" class="ghost">Cloud verbinden / laden</button>
-            <button id="cloudSave" class="ghost">Jetzt synchronisieren</button>
+            <button id="cloudConnect" class="ghost">Turnier laden</button>
+            <button id="cloudSave" class="ghost">Turnier speichern</button>
           </div>
         </div>
         <div class="actions">
-          <button id="applySetup" class="primary">Übernehmen & Teams öffnen</button>
+          <button id="applySetup" class="primary">Nur lokal speichern & Teams öffnen</button>
           <button id="resetApp" class="danger ghost">Daten zurücksetzen</button>
         </div>
       </div>
@@ -89,7 +89,7 @@
     </section>
   </main>
 
-  <footer>Lokale Speicherung auf diesem Gerät · optional gemeinsame Cloud-Synchronisierung · <button id="footerVersion" class="version-link" type="button">Version 1.2.0</button></footer>
+  <footer>Lokale Speicherung auf diesem Gerät · optional gemeinsame Cloud-Synchronisierung · <button id="footerVersion" class="version-link" type="button">Version 1.3.0</button></footer>
 
   <div id="infoModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
     <div class="modal-backdrop" data-close-info></div>
@@ -98,15 +98,15 @@
       <div class="version-badge">Aktuelle Version</div>
       <h2 id="infoTitle">Volleyball-Turnierverwaltung</h2>
       <dl class="version-details">
-        <div><dt>Version</dt><dd id="versionNumber">1.2.0</dd></div>
-        <div><dt>Veröffentlicht</dt><dd id="versionDate">13. Juli 2026</dd></div>
-        <div><dt>Build</dt><dd id="versionBuild">2026.07.13-2</dd></div>
+        <div><dt>Version</dt><dd id="versionNumber">1.3.0</dd></div>
+        <div><dt>Veröffentlicht</dt><dd id="versionDate">14. Juli 2026</dd></div>
+        <div><dt>Build</dt><dd id="versionBuild">2026.07.14-1</dd></div>
       </dl>
       <h3>Neu in dieser Version</h3>
       <ul class="version-changes">
-        <li>Faire, fest geprüfte Spielpläne: jedes Team hat exakt gleich viele Spiele</li>
-        <li>Neue mobile Ergebniskarten mit zentrierten Teams und besserer Punkteingabe</li>
-        <li>Fairnessprüfung basiert jetzt auf den fest hinterlegten Turnierplänen</li>
+        <li>Explizite Schaltflächen zum Laden und Speichern eines Turniers über den Turniercode</li>
+        <li>Turniername, Datum und Teamzahl bleiben beim Seitenwechsel stabil gespeichert</li>
+        <li>Für 10 bis 13 Teams: 20 Minuten Spielzeit und 10 Minuten Wechselpause</li>
       </ul>
       <p class="version-note">Stimmen Version und Build mit der veröffentlichten Fassung überein, ist die aktuelle Live-Version geladen.</p>
       <div class="actions compact">
