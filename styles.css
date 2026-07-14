@@ -65,3 +65,17 @@ footer{display:flex;justify-content:center;align-items:center;gap:7px}.footer-lo
 @media(min-width:900px){#view-setup.active{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:18px;align-items:start}#view-setup .info-grid{margin-top:0;grid-template-columns:1fr 1fr}.hero.card{padding:26px}}
 @media(max-width:760px){.club-logo{width:52px;height:52px}.topbar h1{font-size:1.28rem}.topbar{min-height:82px}.nav{top:82px}.access-badge{display:none}.match-body{min-height:auto}.schedule-score{flex-wrap:wrap}.schedule-score small{width:100%;text-align:center}}
 @media(max-width:420px){.club-logo{width:44px;height:44px}.topbar h1{font-size:1.1rem}.topbar p{font-size:.82rem}.side div{font-size:.93rem}.match-head{font-size:.82rem}.match-body{grid-template-columns:minmax(0,1fr) 46px minmax(0,1fr)}}
+
+
+/* Version 1.7.1 – weiße Kopfzeile und strikter Lesemodus */
+.topbar{background:#fff!important;color:#063d86!important;border-bottom:3px solid #0755b5;box-shadow:0 5px 20px rgba(4,58,128,.12)}
+.topbar h1,.topbar p{color:#063d86!important}.topbar p{opacity:.82}
+.club-logo{background:#fff;border-radius:10px;filter:none}
+.icon-btn{color:#0755b5!important}.access-badge{border-color:#bad5f3!important;background:#eef5ff!important;color:#063d86!important}
+#applySetup,.primary{background:linear-gradient(135deg,#0b65c8,#0755b5)!important;color:#fff!important}
+.nav[hidden],#menuBtn[hidden],#accessBadge[hidden]{display:none!important}
+.viewer-mode #view-setup input:disabled,.viewer-mode #view-setup select:disabled{background:#eef2f7;color:#607085;cursor:not-allowed;opacity:1}
+.viewer-mode #view-results input,.viewer-mode #teamList input{pointer-events:none!important}
+.viewer-mode .result-card input{display:none!important}
+.viewer-mode button[data-view=results],.viewer-mode button[data-view=partners],.viewer-mode button[data-view=fairness]{display:none!important}
+@media(max-width:760px){.topbar{min-height:82px}.nav{top:82px}}

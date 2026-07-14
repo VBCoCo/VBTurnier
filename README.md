@@ -72,3 +72,11 @@ Hinweis: Team- und Ergebnisänderungen werden nach erfolgreicher Freischaltung z
 - Bereits vor der Eingabe gestartete Cloud-Abfragen werden bei jeder neuen lokalen Aktion ungültig.
 - Eine alte Cloud-Antwort kann Ergebnis- oder Teamfelder nicht mehr auf einen vorherigen Wert zurücksetzen.
 - Cloud-Aktualisierungen werden erst nach mindestens fünf Sekunden ohne lokale Änderung übernommen.
+
+
+## Version 1.7.1
+- Weiße Kopfzeile mit Vereinslogo und TTC-Blau.
+- Navigation bleibt auf der Startseite verborgen, bis ein Turnier geöffnet oder neu angelegt wurde.
+- Lesemodus blendet Ergebnisse, Partner und Fairness vollständig aus.
+- Eingaben sind im Lesemodus gesperrt.
+- Bearbeitungsmodus wird erst nach erfolgreicher Passwortprüfung freigeschaltet.

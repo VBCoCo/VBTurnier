@@ -18,13 +18,13 @@
       </div>
     </div>
     <div class="top-actions">
-      <span id="accessBadge" class="access-badge">Lokal</span>
+      <span id="accessBadge" class="access-badge" hidden>Lokal</span>
       <button id="infoBtn" class="icon-btn always-visible" aria-label="Versionsinformationen" title="Versionsinformationen">ⓘ</button>
-      <button id="menuBtn" class="icon-btn" aria-label="Menü">☰</button>
+      <button id="menuBtn" class="icon-btn" aria-label="Menü" hidden>☰</button>
     </div>
   </header>
 
-  <nav id="nav" class="nav">
+  <nav id="nav" class="nav" hidden>
     <button data-view="setup" class="active">Start</button>
     <button data-view="teams">Teams</button>
     <button data-view="schedule">Spielplan</button>
@@ -64,7 +64,7 @@
             <button id="refreshTournaments" class="ghost">Liste aktualisieren</button>
             <button id="cloudConnect" class="ghost">Ausgewähltes Turnier laden</button>
             <button id="cloudCreate" class="ghost">Neues Turnier anlegen</button>
-            <button id="cloudSave" class="ghost">Änderungen speichern</button>
+            <button id="cloudSave" class="ghost">Bearbeitung freischalten</button>
           </div>
         </div>
         <div class="actions">
@@ -106,7 +106,7 @@
     </section>
   </main>
 
-  <footer><img src="ttc-logo.gif" alt="" class="footer-logo"> TTC Geltendorf · lokale Speicherung und optionale Cloud-Synchronisierung · <button id="footerVersion" class="version-link" type="button">Version 1.7.0</button></footer>
+  <footer><img src="ttc-logo.gif" alt="" class="footer-logo"> TTC Geltendorf · lokale Speicherung und optionale Cloud-Synchronisierung · <button id="footerVersion" class="version-link" type="button">Version 1.7.1</button></footer>
 
   <div id="infoModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
     <div class="modal-backdrop" data-close-info></div>
@@ -115,16 +115,16 @@
       <div class="version-badge">Aktuelle Version</div>
       <h2 id="infoTitle">Volleyball-Turnierverwaltung</h2>
       <dl class="version-details">
-        <div><dt>Version</dt><dd id="versionNumber">1.7.0</dd></div>
+        <div><dt>Version</dt><dd id="versionNumber">1.7.1</dd></div>
         <div><dt>Veröffentlicht</dt><dd id="versionDate">14. Juli 2026</dd></div>
-        <div><dt>Build</dt><dd id="versionBuild">2026.07.14-7</dd></div>
+        <div><dt>Build</dt><dd id="versionBuild">2026.07.14-8</dd></div>
       </dl>
       <h3>Neu in dieser Version</h3>
       <ul class="version-changes">
-        <li>Vereinslogo und TTC-Blau als neues Erscheinungsbild</li>
-        <li>Anzeige-Modus ohne Passwort mit reduzierter Navigation</li>
-        <li>Live-Ergebnisse direkt im Spielplan sichtbar</li>
-        <li>Teams im Spielplan und Ergebnisdarstellung stärker zentriert</li>
+        <li>Weiße Kopfzeile mit Vereinslogo und konsequentem TTC-Blau</li>
+        <li>Navigation erst nach dem Öffnen oder Anlegen eines Turniers sichtbar</li>
+        <li>Lesemodus vollständig gesperrt: keine Ergebnis-, Partner- oder Fairness-Reiter</li>
+        <li>Bearbeitung erst nach erfolgreicher Passwortprüfung</li>
       </ul>
       <p class="version-note">Stimmen Version und Build mit der veröffentlichten Fassung überein, ist die aktuelle Live-Version geladen.</p>
       <div class="actions compact">
