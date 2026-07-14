@@ -1,139 +1,30 @@
 <!doctype html>
-<html lang="de">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#0755b5" />
-  <title>Volleyball-Turnierverwaltung</title>
-  <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="stylesheet" href="styles.css" />
-</head>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0755b5"><title>Volleyball-Turnierverwaltung</title><link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="styles.css"></head>
 <body>
-  <header class="topbar">
-    <div class="brand">
-      <img src="ttc-logo.gif" alt="Vereinslogo TTC Geltendorf" class="club-logo">
-      <div>
-        <h1>Volleyball-Turnier</h1>
-        <p id="subtitle">TTC Geltendorf</p>
-      </div>
-    </div>
-    <div class="top-actions">
-      <span id="accessBadge" class="access-badge" hidden>Lokal</span>
-      <button id="infoBtn" class="icon-btn always-visible" aria-label="Versionsinformationen" title="Versionsinformationen">ⓘ</button>
-      <button id="menuBtn" class="icon-btn" aria-label="Menü" hidden>☰</button>
-    </div>
-  </header>
-
-  <nav id="nav" class="nav" hidden>
-    <button data-view="setup" class="active">Start</button>
-    <button data-view="teams">Teams</button>
-    <button data-view="schedule">Spielplan</button>
-    <button data-view="results">Ergebnisse</button>
-    <button data-view="table">Live-Tabelle</button>
-    <button data-view="partners">Partner</button>
-    <button data-view="fairness">Fairness</button>
-  </nav>
-
-  <main>
-    <section id="view-setup" class="view active">
-      <div class="hero card">
-        <h2>Turnier einrichten</h2>
-        <div class="grid two">
-          <label>Turniername<input id="tournamentName" value="Volleyball-Gauditurnier TTC Geltendorf"></label>
-          <label>Datum<input id="tournamentDate" type="date"></label>
-          <label>Anzahl Dreier-Teams<select id="teamCount"><option>9</option><option>10</option><option selected>11</option><option>12</option><option>13</option></select></label>
-          <label>Siegerehrung<input id="awardTime" type="time" value="17:00"></label>
-          <label class="check-label"><input id="usePlayerNames" type="checkbox"> Spielernamen erfassen</label>
-        </div>
-        <div class="cloud-box">
-          <h3>Gemeinsamer Turnierstand</h3>
-          <p>Vorhandenes Turnier auswählen oder ein neues anlegen. Das Passwort schützt Änderungen; zum bloßen Ansehen ist kein Passwort erforderlich.</p>
-          <div class="grid two">
-            <label>Vorhandenes Turnier
-              <select id="tournamentSelect"><option value="">Turnier auswählen …</option></select>
-            </label>
-            <label>Bearbeitungspasswort
-              <input id="tournamentPassword" type="password" autocomplete="current-password" placeholder="Passwort zum Speichern">
-            </label>
-            <label>Code für neues Turnier
-              <input id="tournamentCode" placeholder="z. B. GELTENDORF-2026" autocapitalize="characters">
-            </label>
-            <div class="cloud-status-wrap"><span id="cloudStatus" class="cloud-status">Nur lokal</span></div>
-          </div>
-          <div class="actions compact">
-            <button id="refreshTournaments" class="ghost">Liste aktualisieren</button>
-            <button id="cloudConnect" class="ghost">Ausgewähltes Turnier laden</button>
-            <button id="cloudCreate" class="ghost">Neues Turnier anlegen</button>
-            <button id="cloudSave" class="ghost">Bearbeitung freischalten</button>
-          </div>
-        </div>
-        <div class="actions">
-          <button id="applySetup" class="primary">Nur lokal speichern & Teams öffnen</button>
-          <button id="resetApp" class="danger ghost">Daten zurücksetzen</button>
-        </div>
-      </div>
-      <div class="card info-grid" id="summaryCards"></div>
-    </section>
-
-    <section id="view-teams" class="view">
-      <div class="section-head"><div><h2>Teams</h2><p>Nur die ausgewählte Anzahl wird angezeigt. Spielernamen sind optional.</p></div><button id="fillDemo" class="ghost">Beispielnamen</button></div>
-      <div id="teamList" class="team-list"></div>
-    </section>
-
-    <section id="view-schedule" class="view">
-      <div class="section-head"><div><h2>Spielplan</h2><p>Zweizeilige Darstellung je Partie.</p></div><button onclick="window.print()" class="ghost">Drucken</button></div>
-      <div id="schedule"></div>
-    </section>
-
-    <section id="view-results" class="view">
-      <div class="section-head"><div><h2>Ergebnisse</h2><p>Bei Gleichstand bitte Entscheidungsball spielen.</p></div></div>
-      <div id="results"></div>
-    </section>
-
-    <section id="view-table" class="view">
-      <div class="section-head"><div><h2>Live-Tabelle</h2><p>Sortierung nach Punkten und Differenz. Gleiche Werte ergeben denselben Platz.</p></div></div>
-      <div class="table-wrap"><table><thead><tr><th>Platz</th><th>Team</th><th>Sp.</th><th>S</th><th>N</th><th>Pkt.</th><th>BP</th><th>GP</th><th>Diff.</th></tr></thead><tbody id="standings"></tbody></table></div>
-    </section>
-
-    <section id="view-partners" class="view">
-      <div class="section-head"><div><h2>Partner- & Gegnerübersicht</h2></div></div>
-      <div id="partners"></div>
-    </section>
-
-    <section id="view-fairness" class="view">
-      <div class="section-head"><div><h2>Fairnessprüfung</h2><p>Partner, Gegner, Plätze und Pausen im Überblick.</p></div></div>
-      <div id="fairness"></div>
-    </section>
-  </main>
-
-  <footer><img src="ttc-logo.gif" alt="" class="footer-logo"> TTC Geltendorf · lokale Speicherung und optionale Cloud-Synchronisierung · <button id="footerVersion" class="version-link" type="button">Version 1.7.1</button></footer>
-
-  <div id="infoModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
-    <div class="modal-backdrop" data-close-info></div>
-    <div class="modal-card">
-      <button id="infoClose" class="modal-close" type="button" aria-label="Schließen">×</button>
-      <div class="version-badge">Aktuelle Version</div>
-      <h2 id="infoTitle">Volleyball-Turnierverwaltung</h2>
-      <dl class="version-details">
-        <div><dt>Version</dt><dd id="versionNumber">1.7.1</dd></div>
-        <div><dt>Veröffentlicht</dt><dd id="versionDate">14. Juli 2026</dd></div>
-        <div><dt>Build</dt><dd id="versionBuild">2026.07.14-8</dd></div>
-      </dl>
-      <h3>Neu in dieser Version</h3>
-      <ul class="version-changes">
-        <li>Weiße Kopfzeile mit Vereinslogo und konsequentem TTC-Blau</li>
-        <li>Navigation erst nach dem Öffnen oder Anlegen eines Turniers sichtbar</li>
-        <li>Lesemodus vollständig gesperrt: keine Ergebnis-, Partner- oder Fairness-Reiter</li>
-        <li>Bearbeitung erst nach erfolgreicher Passwortprüfung</li>
-      </ul>
-      <p class="version-note">Stimmen Version und Build mit der veröffentlichten Fassung überein, ist die aktuelle Live-Version geladen.</p>
-      <div class="actions compact">
-        <button id="checkUpdateBtn" class="primary" type="button">Aktuelle Version neu laden</button>
-        <button id="closeInfoBtn" class="ghost" type="button">Schließen</button>
-      </div>
-    </div>
+<header class="topbar"><div class="brand"><img src="ttc-logo.gif" alt="Vereinslogo TTC Geltendorf" class="club-logo"><div><h1>Volleyball-Turnier</h1><p id="subtitle">Öffentliche Turnieranzeige TTC Geltendorf</p></div></div><div class="top-actions"><span id="accessBadge" class="access-badge" hidden></span><button id="displayModeBtn" class="ghost top-switch" hidden>Zur Anzeige</button><button id="infoBtn" class="icon-btn always-visible" aria-label="Versionsinformationen">ⓘ</button><button id="menuBtn" class="icon-btn" aria-label="Menü" hidden>☰</button></div></header>
+<nav id="nav" class="nav" hidden><button data-view="setup" class="active">Start</button><button data-view="teams">Teams</button><button data-view="schedule">Spielplan</button><button data-view="results">Ergebnisse</button><button data-view="table">Live-Tabelle</button><button data-view="partners">Partner</button><button data-view="fairness">Fairness</button></nav>
+<main>
+<section id="view-setup" class="view active">
+  <div id="publicLanding" class="card landing-card">
+    <div class="landing-head"><div><span class="eyebrow">Öffentliche Anzeige</span><h2>Turnier auswählen</h2><p>Hier werden ausschließlich Turniere angezeigt, die für Besucher freigegeben wurden.</p></div><button id="loginBtn" class="primary login-button">Login</button></div>
+    <div class="public-picker"><label>Verfügbare Turniere<select id="publicTournamentSelect"><option value="">Turnier auswählen …</option></select></label><div class="actions compact"><button id="publicLoad" class="primary">Turnier anzeigen</button><button id="refreshPublic" class="ghost">Liste aktualisieren</button></div></div>
+    <div class="cloud-status-wrap"><span id="cloudStatus" class="cloud-status"></span></div>
   </div>
-  <script src="config.js"></script>
-  <script src="app.js"></script>
-</body>
-</html>
+  <div id="adminPanel" class="admin-dashboard" hidden>
+    <div class="card admin-toolbar"><div><span class="eyebrow">Bearbeitungsmodus</span><h2>Turnierverwaltung</h2><p>Turnier öffnen, bearbeiten oder neu anlegen.</p><div class="cloud-status-wrap"><span class="cloud-status"></span></div></div><div class="admin-select-row"><label>Vorhandenes Turnier<select id="adminTournamentSelect"><option value="">Turnier auswählen …</option></select></label><div class="actions compact"><button id="adminLoad" class="primary">Ausgewähltes Turnier öffnen</button><button id="adminRefresh" class="ghost">Liste aktualisieren</button><button id="newTournament" class="ghost">Neues Turnier</button></div></div></div>
+    <div class="hero card"><h2>Turnierdaten</h2><div class="grid two"><label>Turniername<input id="tournamentName"></label><label>Datum<input id="tournamentDate" type="date"></label><label>Anzahl Dreier-Teams<select id="teamCount"><option>9</option><option>10</option><option selected>11</option><option>12</option><option>13</option></select></label><label>Siegerehrung<input id="awardTime" type="time" value="17:00"></label><label class="check-label"><input id="usePlayerNames" type="checkbox"> Spielernamen erfassen</label><label class="check-label public-check"><input id="isPublic" type="checkbox" checked> In der öffentlichen Anzeige sichtbar</label><label>Code für neues Turnier<input id="tournamentCode" placeholder="z. B. GELTENDORF-2026" autocapitalize="characters"></label></div><div class="actions"><button id="cloudCreate" class="primary">Neues Turnier anlegen</button><button id="cloudSave" class="primary">Änderungen speichern</button></div></div>
+    <div class="card password-card"><h3>Bearbeitungspasswort ändern</h3><p>Das Passwort gilt für die gesamte Turnierverwaltung.</p><div class="grid two"><label>Neues Passwort<input id="newAdminPassword" type="password" autocomplete="new-password"></label><label>Neues Passwort wiederholen<input id="confirmAdminPassword" type="password" autocomplete="new-password"></label></div><div class="actions compact"><button id="changePasswordBtn" class="ghost">Passwort ändern</button></div></div>
+  </div>
+  <div class="card info-grid" id="summaryCards"></div>
+</section>
+<section id="view-teams" class="view"><div class="section-head"><div><h2>Teams</h2><p>Spielernamen sind optional.</p></div><button id="fillDemo" class="ghost">Beispielnamen</button></div><div id="teamList" class="team-list"></div></section>
+<section id="view-schedule" class="view"><div class="section-head"><div><h2>Spielplan</h2><p>Ergebnisse werden direkt bei der Partie angezeigt.</p></div><button onclick="window.print()" class="ghost">Drucken</button></div><div id="schedule"></div></section>
+<section id="view-results" class="view"><div class="section-head"><div><h2>Ergebnisse</h2><p>Bei Gleichstand bitte Entscheidungsball spielen.</p></div></div><div id="results"></div></section>
+<section id="view-table" class="view"><div class="section-head"><div><h2>Live-Tabelle</h2><p>Gleiche Punkte und gleiche Differenz ergeben denselben Platz.</p></div></div><div class="table-wrap"><table><thead><tr><th>Platz</th><th>Team</th><th>Sp.</th><th>S</th><th>N</th><th>Pkt.</th><th>BP</th><th>GP</th><th>Diff.</th></tr></thead><tbody id="standings"></tbody></table></div></section>
+<section id="view-partners" class="view"><div class="section-head"><div><h2>Partner- & Gegnerübersicht</h2></div></div><div id="partners"></div></section>
+<section id="view-fairness" class="view"><div class="section-head"><div><h2>Fairnessprüfung</h2></div></div><div id="fairness"></div></section>
+</main>
+<footer><img src="ttc-logo.gif" alt="" class="footer-logo"> TTC Geltendorf · <button id="footerVersion" class="version-link">Version 1.8.0</button></footer>
+<div id="loginModal" class="modal" aria-hidden="true"><div class="modal-backdrop"></div><div class="modal-card login-card"><button id="loginClose" class="modal-close">×</button><div class="version-badge">Turnierverwaltung</div><h2>Bearbeitung freischalten</h2><p>Beim ersten Einsatz wird das hier eingegebene Passwort als Verwaltungskennwort eingerichtet. Das Feld ist bei jedem Aufruf zunächst leer.</p><label>Passwort<input id="loginPassword" type="password" autocomplete="current-password" placeholder="Passwort eingeben"></label><p id="loginMessage" class="login-message"></p><div class="actions"><button id="loginSubmit" class="primary">Bearbeitung freischalten</button></div></div></div>
+<div id="infoModal" class="modal" aria-hidden="true"><div class="modal-backdrop" data-close-info></div><div class="modal-card"><button id="infoClose" class="modal-close">×</button><div class="version-badge">Aktuelle Version</div><h2>Volleyball-Turnierverwaltung</h2><dl class="version-details"><div><dt>Version</dt><dd id="versionNumber">1.8.0</dd></div><div><dt>Veröffentlicht</dt><dd id="versionDate">14. Juli 2026</dd></div><div><dt>Build</dt><dd id="versionBuild">2026.07.14-9</dd></div></dl><h3>Neu in dieser Version</h3><ul class="version-changes"><li>Öffentliche Startseite zeigt nur freigegebene Turniere</li><li>Zentraler Login für die gesamte Verwaltung</li><li>Sichtbarkeit pro Turnier steuerbar</li><li>Passwort kann im Bearbeitungsmodus geändert werden</li><li>Klarer Wechsel zurück in die öffentliche Anzeige</li></ul><div class="actions compact"><button id="checkUpdateBtn" class="primary">Aktuelle Version neu laden</button><button id="closeInfoBtn" class="ghost">Schließen</button></div></div></div>
+<script src="config.js"></script><script src="app.js"></script></body></html>
