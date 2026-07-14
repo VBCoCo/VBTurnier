@@ -43,9 +43,16 @@ Hinweis: Team- und Ergebnisänderungen werden nach erfolgreicher Freischaltung z
 - Nach dem Hochladen muss `supabase_setup.sql` erneut im Supabase SQL Editor ausgeführt werden.
 
 
-## Neu in Version 1.6.0
+## Neu in Version 1.6.1
 
 - Eingabefelder verlieren während der Bearbeitung nicht mehr durch die Cloud-Aktualisierung den Fokus.
 - Lokale Änderungen werden nicht mehr durch einen älteren Cloud-Stand überschrieben, solange sie noch gespeichert werden.
 - Teamnamen, Spielernamen und mehrstellige Ergebnisse werden mit jedem Tastendruck lokal übernommen und anschließend im Hintergrund synchronisiert.
 - Cloud-Abfragen pausieren automatisch, solange ein Eingabefeld aktiv ist.
+
+
+## Version 1.6.1
+- Race-Condition zwischen laufender Cloud-Speicherung und neuen Tastendrücken behoben.
+- Neuere Eingaben können nicht mehr von einer älteren Speicherantwort als gespeichert markiert werden.
+- Cloud-Abfrage pausiert beim Fokus und kurz nach dem Verlassen eines Eingabefeldes.
+- Falls während des Speicherns weitergeschrieben wird, folgt automatisch ein weiterer Speichervorgang.
