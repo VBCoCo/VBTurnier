@@ -41,3 +41,11 @@ Hinweis: Team- und Ergebnisänderungen werden nach erfolgreicher Freischaltung z
 - Das bisher angezeigte Aktualisierungsdatum wird nicht mehr als Turnierdatum verwendet.
 - Beim Anlegen eines neuen Turniers sind Turniername und Datum Pflicht und werden in der Cloud gespeichert.
 - Nach dem Hochladen muss `supabase_setup.sql` erneut im Supabase SQL Editor ausgeführt werden.
+
+
+## Neu in Version 1.6.0
+
+- Eingabefelder verlieren während der Bearbeitung nicht mehr durch die Cloud-Aktualisierung den Fokus.
+- Lokale Änderungen werden nicht mehr durch einen älteren Cloud-Stand überschrieben, solange sie noch gespeichert werden.
+- Teamnamen, Spielernamen und mehrstellige Ergebnisse werden mit jedem Tastendruck lokal übernommen und anschließend im Hintergrund synchronisiert.
+- Cloud-Abfragen pausieren automatisch, solange ein Eingabefeld aktiv ist.
