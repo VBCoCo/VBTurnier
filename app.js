@@ -1,7 +1,7 @@
 (function(){
 'use strict';
-var APP_VERSION='1.8.0';
-var APP_BUILD='2026.07.14-9';
+var APP_VERSION='1.8.1';
+var APP_BUILD='2026.07.14-10';
 var APP_RELEASE_DATE='14. Juli 2026';
 var STORAGE='volleyballTurnierV4';
 var state={teamCount:11,name:'Volleyball-Gauditurnier TTC Geltendorf',date:'',awardTime:'17:00',usePlayerNames:false,tournamentCode:'',teams:[],scores:{},view:'setup'};
@@ -42,7 +42,7 @@ function renderSetup(){
   qs('#adminPanel').hidden=!adminAuthenticated;
   qs('#subtitle').textContent=adminAuthenticated?'Turnierverwaltung TTC Geltendorf':'Öffentliche Turnieranzeige TTC Geltendorf';
   if(adminAuthenticated){
-    qs('#tournamentName').value=state.name||'';qs('#tournamentDate').value=state.date||'';qs('#teamCount').value=String(state.teamCount);qs('#awardTime').value=state.awardTime||'17:00';qs('#usePlayerNames').checked=!!state.usePlayerNames;qs('#isPublic').checked=!!currentIsPublic;qs('#tournamentCode').value='';qs('#adminTournamentSelect').value=state.tournamentCode||'';
+    qs('#tournamentName').value=state.name||'';qs('#tournamentDate').value=state.date||'';qs('#teamCount').value=String(state.teamCount);qs('#awardTime').value=state.awardTime||'17:00';qs('#usePlayerNames').checked=!!state.usePlayerNames;qs('#isPublic').checked=!!currentIsPublic;qs('#adminTournamentSelect').value=state.tournamentCode||'';
     var p=plans[state.teamCount];qs('#summaryCards').innerHTML='<div class="stat"><b>'+state.teamCount+'</b><span>Dreier-Teams</span></div><div class="stat"><b>'+p.matches.length+'</b><span>Partien</span></div><div class="stat"><b>'+p.gamesPerTeam+'</b><span>Spiele je Team</span></div><div class="stat"><b>'+p.duration+' min</b><span>Spielzeit</span></div><div class="stat"><b>'+p.pause+' min</b><span>Wechselpause</span></div>';
   } else qs('#summaryCards').innerHTML='';
 }
@@ -69,7 +69,8 @@ function adminLogin(){var pw=qs('#loginPassword').value||'';if(pw.length<6){qs('
 function switchToDisplay(){adminAuthenticated=false;adminPassword='';sessionReady=false;state.tournamentCode='';state.view='setup';try{sessionStorage.removeItem('turnierAdminPassword')}catch(e){}loadPublicList();show('setup')}
 function loadAdminTournament(){var code=cleanCode(qs('#adminTournamentSelect').value);if(!code){updateStatus('Bitte ein Turnier auswählen','bad');return}rpc('load_tournament_admin',{p_code:code,p_admin_password:adminPassword}).then(function(rows){var row=Array.isArray(rows)?rows[0]:rows;applyLoaded(row,code,row.is_public);updateStatus('Turnier zur Bearbeitung geöffnet','ok');show('teams')}).catch(function(e){updateStatus('Laden fehlgeschlagen: '+e.message,'bad')})}
 function newTournamentForm(){state={teamCount:11,name:'',date:'',awardTime:'17:00',usePlayerNames:false,tournamentCode:'',teams:[],scores:{},view:'setup'};ensureTeams();currentIsPublic=true;sessionReady=false;renderSetup();qs('#tournamentName').focus();updateStatus('Neues Turnier ausfüllen und anschließend anlegen')}
-function createTournament(){captureSetup();var code=cleanCode(qs('#tournamentCode').value);if(!state.name||!state.date||!code){updateStatus('Turniername, Datum und Code sind erforderlich','bad');return}rpc('create_tournament',{p_code:code,p_name:state.name,p_admin_password:adminPassword,p_data:cloudPayload(),p_public:currentIsPublic}).then(function(){state.tournamentCode=code;sessionReady=true;localDirty=false;return loadAdminList(code)}).then(function(){updateStatus('Turnier angelegt','ok');show('teams')}).catch(function(e){updateStatus('Anlegen fehlgeschlagen: '+e.message,'bad')})}
+function generateTournamentCode(){var base=cleanCode((state.name||'TURNIER')+'-'+(state.date||''));var suffix=Date.now().toString(36).slice(-6).toUpperCase();return (base||'TURNIER')+'-'+suffix}
+function createTournament(){captureSetup();if(!state.name||!state.date){updateStatus('Turniername und Datum sind erforderlich','bad');return}var code=generateTournamentCode();rpc('create_tournament',{p_code:code,p_name:state.name,p_admin_password:adminPassword,p_data:cloudPayload(),p_public:currentIsPublic}).then(function(){state.tournamentCode=code;sessionReady=true;localDirty=false;return loadAdminList(code)}).then(function(){updateStatus('Turnier angelegt','ok');show('teams')}).catch(function(e){updateStatus('Anlegen fehlgeschlagen: '+e.message,'bad')})}
 function cloudSave(showMessage){if(!adminAuthenticated||!state.tournamentCode)return Promise.resolve(false);var rev=localRevision;cloudBusy=true;if(showMessage)updateStatus('Speichere …');return rpc('save_tournament',{p_code:state.tournamentCode,p_admin_password:adminPassword,p_name:state.name,p_data:cloudPayload(),p_public:currentIsPublic}).then(function(){if(localRevision===rev)localDirty=false;else scheduleCloudSave();if(showMessage)updateStatus('Änderungen gespeichert','ok');return true}).catch(function(e){localDirty=true;updateStatus('Speichern fehlgeschlagen: '+e.message,'bad');return false}).then(function(x){cloudBusy=false;return x})}
 function saveTournament(){captureSetup();saveLocal();cloudSave(true).then(function(ok){if(ok)loadAdminList(state.tournamentCode)})}
 function scheduleCloudSave(){if(!adminAuthenticated||!state.tournamentCode)return;clearTimeout(cloudTimer);cloudTimer=setTimeout(function(){if(cloudBusy){scheduleCloudSave();return}cloudSave(false)},1400)}

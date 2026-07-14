@@ -13,3 +13,9 @@
 - Beim allerersten Login wird das eingegebene Passwort als Verwaltungskennwort eingerichtet.
 - Das Passwort gilt anschließend für alle Turniere und kann im Bearbeitungsmodus geändert werden.
 - Mit **Zur Anzeige** wird die Verwaltung wieder gesperrt.
+
+
+## Version 1.8.1
+- Öffentliche Startseite zeigt ausschließlich freigegebene Turniere und den Login.
+- Verwaltungsbereich und Passwortänderung sind vor dem Login vollständig verborgen.
+- Der technische Turniercode wird automatisch erzeugt und nicht mehr angezeigt.
