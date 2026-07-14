@@ -96,3 +96,11 @@ body:not(.admin-mode) #view-setup.active{display:block!important}
 .final-match .match-head{background:#eaf3ff!important;color:#063d86}
 .final-label{font-weight:900;letter-spacing:.03em}
 .final-result-note{text-align:center;color:var(--muted);font-size:.86rem;padding:0 12px 12px}
+
+
+/* Version 1.9.1 – robuste Sichtbarkeit */
+[hidden]{display:none!important}
+#adminPanel[hidden],#publicLanding[hidden]{display:none!important}
+body:not(.admin-mode) #adminPanel{display:none!important}
+body.admin-mode #publicLanding{display:none!important}
+body:not(.admin-mode) #publicLanding{display:block}
