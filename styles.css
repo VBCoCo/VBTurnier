@@ -104,3 +104,7 @@ body:not(.admin-mode) #view-setup.active{display:block!important}
 body:not(.admin-mode) #adminPanel{display:none!important}
 body.admin-mode #publicLanding{display:none!important}
 body:not(.admin-mode) #publicLanding{display:block}
+
+.lunch-break{margin:20px 0 22px;background:#707784;color:#fff;border-radius:14px;padding:16px 22px;display:flex;align-items:center;justify-content:center;gap:18px;text-align:center;box-shadow:0 5px 18px rgba(31,41,55,.18)}
+.lunch-break strong{font-size:1.15rem;letter-spacing:.12em}.lunch-break span{font-size:1.02rem;font-weight:750}
+@media(max-width:480px){.lunch-break{flex-direction:column;gap:3px;padding:13px}.lunch-break strong{font-size:1rem}}
