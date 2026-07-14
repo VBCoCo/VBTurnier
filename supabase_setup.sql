@@ -35,6 +35,7 @@ drop function if exists public.create_tournament(text,text,text,jsonb);
 drop function if exists public.create_tournament(text,text,text,jsonb,boolean);
 drop function if exists public.save_tournament(text,text,text,jsonb);
 drop function if exists public.save_tournament(text,text,text,jsonb,boolean);
+drop function if exists public.delete_tournament(text,text);
 
 create or replace function public.check_admin_password(p_password text)
 returns boolean language plpgsql security definer set search_path=public,extensions as $$
@@ -115,6 +116,14 @@ begin
  if not found then raise exception 'Turnier nicht gefunden.'; end if;
 end;$$;
 
+create or replace function public.delete_tournament(p_code text,p_admin_password text)
+returns void language plpgsql security definer set search_path=public as $$
+begin
+ if not public.check_admin_password(p_admin_password) then raise exception 'Falsches Passwort.'; end if;
+ delete from public.tournaments where code=upper(trim(p_code));
+ if not found then raise exception 'Turnier nicht gefunden.'; end if;
+end;$$;
+
 grant execute on function public.list_tournaments() to anon,authenticated;
 grant execute on function public.load_tournament(text) to anon,authenticated;
 grant execute on function public.admin_login(text) to anon,authenticated;
@@ -122,4 +131,5 @@ grant execute on function public.list_all_tournaments(text) to anon,authenticate
 grant execute on function public.load_tournament_admin(text,text) to anon,authenticated;
 grant execute on function public.create_tournament(text,text,text,jsonb,boolean) to anon,authenticated;
 grant execute on function public.save_tournament(text,text,text,jsonb,boolean) to anon,authenticated;
+grant execute on function public.delete_tournament(text,text) to anon,authenticated;
 grant execute on function public.change_admin_password(text,text) to anon,authenticated;

@@ -1,10 +1,12 @@
-# Volleyball-Turnierverwaltung 2.3.0
+# Volleyballturnier-Webseite 2.3.1
 
-## Neu
-- Platzarten-Fairnesscheck vor der Generierung
-- Anzeige der rechnerischen Zielverteilung je Platzart
-- Verstärkte Optimierung auf identische Platzarten-Einsätze
-- Fairness-Score von 0 bis 100 %
-- Öffentliche Finalpaarungen werden als Erstplatzierter, Zweitplatzierter usw. anonymisiert
+## Änderungen
 
-Keine neue Supabase-SQL-Anpassung erforderlich.
+- Navigation bleibt nach dem Speichern eines Turniers sichtbar.
+- Nach erfolgreichem Speichern wird automatisch wieder die zuletzt geöffnete Ansicht angezeigt.
+- In der Bearbeitungsmaske kann ein bestehendes Turnier gelöscht werden.
+- Das Löschen verlangt zuerst eine Bestätigung und danach die Eingabe `LÖSCHEN`.
+
+## Wichtig für Supabase
+
+Die Datei `supabase_setup.sql` einmal im Supabase SQL Editor ausführen. Sie ergänzt die Funktion `delete_tournament`. Bestehende Turniere bleiben dabei erhalten.
