@@ -1,7 +1,7 @@
 (function(){
 'use strict';
-var APP_VERSION='2.4.0';
-var APP_BUILD='2026.07.14-20';
+var APP_VERSION='2.4.1';
+var APP_BUILD='2026.07.14-21';
 var APP_RELEASE_DATE='14. Juli 2026';
 var STORAGE='volleyballTurnierV6';
 var state={mode:'fixed',teamCount:11,teamSize:3,combineCount:2,gamesPerTeamFlexible:8,courtCount:2,courtNames:'Sand, Rasen 1',courtConfigs:[{name:'Sand',type:'Sand'},{name:'Rasen 1',type:'Rasen'}],startTime:'10:00',matchDuration:20,changeDuration:10,lunchDuration:45,lunchAfterRound:5,flexPlan:null,name:'Volleyball-Gauditurnier TTC Geltendorf',date:'',awardTime:'17:00',usePlayerNames:false,finalRound:false,hideFinalQualifiers:true,strictCourtFairness:false,tournamentCode:'',teams:[],scores:{},view:'setup'};
@@ -72,13 +72,38 @@ function tournamentFairnessScore(){
   return {score:Math.max(0,Math.round(score)),issues:issues,court:court,partnerRepeats:partnerRepeats,maxSeries:maxSeries};
 }
 
+
+function exactTwoTypeOneEachAssignment(matches,c,types,need){
+  var teamMatches=Array.from({length:c.n+1},function(){return []});
+  matches.forEach(function(m,mi){m.a.concat(m.b).forEach(function(id){teamMatches[id].push(mi)})});
+  for(var id=1;id<=c.n;id++)if(teamMatches[id].length!==2)return null;
+  var adj=Array.from({length:matches.length},function(){return []});
+  for(var id=1;id<=c.n;id++){
+    var a=teamMatches[id][0],b=teamMatches[id][1];
+    if(a===b)return null;adj[a].push(b);adj[b].push(a);
+  }
+  var color=Array(matches.length).fill(-1),components=[];
+  for(var start=0;start<matches.length;start++)if(color[start]<0){
+    var q=[start],nodes=[],counts=[0,0];color[start]=0;
+    while(q.length){var u=q.shift();nodes.push(u);counts[color[u]]++;for(var j=0;j<adj[u].length;j++){var v=adj[u][j];if(color[v]<0){color[v]=1-color[u];q.push(v)}else if(color[v]===color[u])return null}}
+    components.push({nodes:nodes,counts:counts});
+  }
+  var target0=need[0],dp={0:[]};
+  components.forEach(function(comp,ci){var nd={};Object.keys(dp).forEach(function(k){var base=+k;[0,1].forEach(function(flip){var add=comp.counts[flip?1:0],sum=base+add;if(sum<=target0&&nd[sum]===undefined)nd[sum]=dp[k].concat([flip])})});dp=nd});
+  if(dp[target0]===undefined)return null;
+  var flips=dp[target0],labels=Array(matches.length).fill(0);
+  components.forEach(function(comp,ci){var flip=flips[ci];comp.nodes.forEach(function(mi){labels[mi]=flip?1-color[mi]:color[mi]})});
+  return matches.map(function(m,i){return {a:m.a.slice(),b:m.b.slice(),courtType:types[labels[i]]}});
+}
+
 function exactCourtTypeAssignment(matches,c,seed){
   var model=courtTypeModel(c),types=model.parts.map(function(p){return p.type}),typeIndex={};types.forEach(function(t,i){typeIndex[t]=i});
   var target=model.parts.map(function(p){return Math.round(p.raw)}),need=model.parts.map(function(p){return Math.round(c.n*p.raw/(2*c.k))});
   if(need.reduce(function(a,b){return a+b},0)!==matches.length)return null;
+  if(types.length===2&&target[0]===1&&target[1]===1){var direct=exactTwoTypeOneEachAssignment(matches,c,types,need);if(direct)return direct;}
   var rnd=rngFactory(seed),teamIds=matches.map(function(m){return m.a.concat(m.b)}),best=null;
   function score(counts){var sc=0;for(var id=1;id<=c.n;id++)for(var t=0;t<types.length;t++){var d=(counts[id][t]||0)-target[t];sc+=d*d}return sc}
-  for(var attempt=0;attempt<32;attempt++){
+  for(var attempt=0;attempt<120;attempt++){
     var labels=[];need.forEach(function(n,t){for(var i=0;i<n;i++)labels.push(t)});shuffle(labels,rnd);
     var counts=Array.from({length:c.n+1},function(){return Array(types.length).fill(0)});
     labels.forEach(function(t,mi){teamIds[mi].forEach(function(id){counts[id][t]++})});
@@ -129,11 +154,17 @@ function buildPlanFromRows(roundRows,c,seed,strictUsed){
   return {n:c.n,teamSize:+state.teamSize,combineCount:c.k,gamesPerTeam:c.g,rounds:roundRows.length,slots:c.courts,duration:c.duration,pause:c.pause,lunchStart:lunchStart,lunchEnd:lunchEnd,lunchAfterRound:c.lunchAfter,fieldNames:c.names,fieldTypes:c.types,courtConfigs:c.courtConfigs,matches:matches,signature:[c.n,c.k,c.g,c.courts,c.start,c.duration,c.pause,c.lunch,c.lunchAfter,seed,strictUsed?'strict':'compact'].join('-'),generated:true,strictCourtFairness:!!strictUsed};
 }
 function buildFlexiblePlan(){
-  var v=validateFlexible();if(!v.ok)return {ok:false,errors:v.errors};var c=v.config,seed=seededHash([c.n,c.k,c.g,c.courts,c.names.join('|'),c.types.join('|'),c.start,c.duration,c.pause,c.lunch,c.lunchAfter,c.strictCourtFairness].join(':')),best=null;
-  for(var attempt=0;attempt<(c.strictCourtFairness?900:420);attempt++){var rnd=rngFactory(seed+attempt*7919),blocks=makeBlocks(c,rnd);if(!blocks)continue;var p=partitionBlocks(blocks,c.k);var repeatedPartners=Object.keys(p.partners).reduce(function(sum,k){return sum+Math.max(0,p.partners[k]-1)},0);var repeatedOpps=Object.keys(p.opps).reduce(function(sum,k){return sum+Math.max(0,p.opps[k]-1)},0);var quality=repeatedPartners*10000+repeatedOpps*25+p.penalty;if(!best||quality<best.quality)best={matches:p.matches,quality:quality,seed:seed+attempt*7919};if(repeatedPartners===0&&attempt>(c.strictCourtFairness?180:80))break}
+  var v=validateFlexible();if(!v.ok)return {ok:false,errors:v.errors};var c=v.config,seed=seededHash([c.n,c.k,c.g,c.courts,c.names.join('|'),c.types.join('|'),c.start,c.duration,c.pause,c.lunch,c.lunchAfter,c.strictCourtFairness].join(':')),best=null,candidates=[];
+  for(var attempt=0;attempt<(c.strictCourtFairness?1400:420);attempt++){
+    var rnd=rngFactory(seed+attempt*7919),blocks=makeBlocks(c,rnd);if(!blocks)continue;var p=partitionBlocks(blocks,c.k);var repeatedPartners=Object.keys(p.partners).reduce(function(sum,k){return sum+Math.max(0,p.partners[k]-1)},0);var repeatedOpps=Object.keys(p.opps).reduce(function(sum,k){return sum+Math.max(0,p.opps[k]-1)},0);var quality=repeatedPartners*10000+repeatedOpps*25+p.penalty,cand={matches:p.matches,quality:quality,seed:seed+attempt*7919};
+    if(c.strictCourtFairness){candidates.push(cand);candidates.sort(function(a,b){return a.quality-b.quality});if(candidates.length>100)candidates.length=100}
+    else{if(!best||quality<best.quality)best=cand;if(repeatedPartners===0&&attempt>80)break}
+  }
+  var typed=null;
+  if(c.strictCourtFairness){for(var ci=0;ci<candidates.length;ci++){var tryTyped=exactCourtTypeAssignment(candidates[ci].matches,c,candidates[ci].seed+555);if(tryTyped){best=candidates[ci];typed=tryTyped;break}}}
   if(!best)return {ok:false,errors:['Für diese Kombination konnte kein gültiger Spielplan erzeugt werden. Bitte Spiele je Team oder Teamzahl anpassen.']};
   var roundRows;
-  if(c.strictCourtFairness){var typed=exactCourtTypeAssignment(best.matches,c,best.seed+555);if(!typed)return {ok:false,errors:['Die exakte Platzartenverteilung ist rechnerisch möglich, konnte mit den übrigen Paarungsbedingungen aber nicht erzeugt werden. Bitte Spiele je Team, Teams je Spielseite oder Platzkonfiguration anpassen.']};roundRows=scheduleExactCourtMatches(typed,c,best.seed+777);if(!roundRows)return {ok:false,errors:['Für die exakte Platzartenverteilung konnte auch mit zusätzlichen Runden kein konfliktfreier Zeitplan gefunden werden.']};}
+  if(c.strictCourtFairness){if(!typed)return {ok:false,errors:['Die exakte Platzartenverteilung ist rechnerisch möglich. Der Generator konnte innerhalb der Suchzeit aber noch keine passende Paarung finden. Bitte erneut berechnen; bei sehr großen Turnieren kann auch eine leicht veränderte Spielezahl helfen.']};roundRows=scheduleExactCourtMatches(typed,c,best.seed+777);if(!roundRows)return {ok:false,errors:['Eine exakt faire Platzverteilung wurde gefunden, aber noch kein konfliktfreier Zeitplan. Bitte erneut berechnen oder mehr Zeit/Runden zulassen.']};}
   else{var rnd2=rngFactory(best.seed+12345);roundRows=assignRounds(best.matches,c,rnd2);roundRows=assignCourtSlots(roundRows,c,rnd2)}
   var plan=buildPlanFromRows(roundRows,c,best.seed,c.strictCourtFairness),counts=Array(c.n).fill(0);plan.matches.forEach(function(m){m.a.concat(m.b).forEach(function(id){counts[id-1]++})});if(counts.some(function(x){return x!==c.g}))return {ok:false,errors:['Interner Prüfungsfehler: Die Einsätze sind nicht gleich verteilt.']};
   if(c.strictCourtFairness){var per={};for(var id=1;id<=c.n;id++)per[id]={};plan.matches.forEach(function(m){m.a.concat(m.b).forEach(function(id){per[id][m.fieldType]=(per[id][m.fieldType]||0)+1})});var model=courtTypeModel(c),bad=false;model.parts.forEach(function(p){for(var id=1;id<=c.n;id++)if((per[id][p.type]||0)!==Math.round(p.raw))bad=true});if(bad)return {ok:false,errors:['Interner Prüfungsfehler: Die exakte Platzartenverteilung wurde nicht vollständig erreicht.']};}
