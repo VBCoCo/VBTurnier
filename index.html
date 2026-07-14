@@ -99,7 +99,7 @@
     </section>
   </main>
 
-  <footer>Lokale Speicherung auf diesem Gerät · optional gemeinsame Cloud-Synchronisierung · <button id="footerVersion" class="version-link" type="button">Version 1.6.1</button></footer>
+  <footer>Lokale Speicherung auf diesem Gerät · optional gemeinsame Cloud-Synchronisierung · <button id="footerVersion" class="version-link" type="button">Version 1.6.2</button></footer>
 
   <div id="infoModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
     <div class="modal-backdrop" data-close-info></div>
@@ -108,15 +108,15 @@
       <div class="version-badge">Aktuelle Version</div>
       <h2 id="infoTitle">Volleyball-Turnierverwaltung</h2>
       <dl class="version-details">
-        <div><dt>Version</dt><dd id="versionNumber">1.6.0</dd></div>
+        <div><dt>Version</dt><dd id="versionNumber">1.6.2</dd></div>
         <div><dt>Veröffentlicht</dt><dd id="versionDate">14. Juli 2026</dd></div>
-        <div><dt>Build</dt><dd id="versionBuild">2026.07.14-4</dd></div>
+        <div><dt>Build</dt><dd id="versionBuild">2026.07.14-6</dd></div>
       </dl>
       <h3>Neu in dieser Version</h3>
       <ul class="version-changes">
-        <li>Turnierauswahl zeigt Turniername und tatsächliches Turnierdatum</li>
-        <li>Beim Anlegen werden Name und Datum der Startseite verbindlich übernommen</li>
-        <li>Das technische Änderungsdatum wird nicht mehr als Turnierdatum angezeigt</li>
+        <li>Bereits laufende Cloud-Abfragen dürfen aktive oder neue Eingaben nicht mehr überschreiben</li>
+        <li>Jede Eingabe und jeder Fokuswechsel macht ältere Cloud-Antworten automatisch ungültig</li>
+        <li>Nach lokalen Änderungen wartet die App fünf Sekunden, bevor fremde Cloud-Änderungen übernommen werden</li>
       </ul>
       <p class="version-note">Stimmen Version und Build mit der veröffentlichten Fassung überein, ist die aktuelle Live-Version geladen.</p>
       <div class="actions compact">

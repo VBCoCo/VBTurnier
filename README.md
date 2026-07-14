@@ -56,3 +56,10 @@ Hinweis: Team- und Ergebnisänderungen werden nach erfolgreicher Freischaltung z
 - Neuere Eingaben können nicht mehr von einer älteren Speicherantwort als gespeichert markiert werden.
 - Cloud-Abfrage pausiert beim Fokus und kurz nach dem Verlassen eines Eingabefeldes.
 - Falls während des Speicherns weitergeschrieben wird, folgt automatisch ein weiterer Speichervorgang.
+
+
+## Version 1.6.2
+
+- Bereits vor der Eingabe gestartete Cloud-Abfragen werden bei jeder neuen lokalen Aktion ungültig.
+- Eine alte Cloud-Antwort kann Ergebnis- oder Teamfelder nicht mehr auf einen vorherigen Wert zurücksetzen.
+- Cloud-Aktualisierungen werden erst nach mindestens fünf Sekunden ohne lokale Änderung übernommen.
