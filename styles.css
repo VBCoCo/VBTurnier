@@ -163,3 +163,8 @@ body:not(.admin-mode) #publicLanding{display:block}
 .fairness-score-card h3{margin:0 0 4px}.fairness-score-card p{margin:0 0 8px;color:#49627d}
 .rank-placeholder{font-weight:800;color:#24496e;background:#edf4fc;border:1px dashed #8eb1d8;border-radius:10px;padding:10px;text-align:center}
 @media(max-width:650px){.fairness-score-card{align-items:flex-start}.score-ring{width:70px;height:70px;min-width:70px}.score-ring b{font-size:24px}}
+.check.wide{grid-column:1/-1;display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border:1px solid #bfd0e8;border-radius:12px;background:#f5f9ff}
+.check.wide input{width:20px;height:20px;margin-top:2px;flex:0 0 auto}
+.check.wide span{display:flex;flex-direction:column;gap:4px}
+.check.wide small{font-weight:400;color:#50647d;line-height:1.35}
+.fairness-banner.strict{background:#eef5ff;border-color:#8db3e6;color:#123f74}

@@ -1,4 +1,4 @@
-# Volleyballturnier-Webseite 2.3.1
+# Volleyballturnier-Webseite 2.4.0
 
 ## Änderungen
 
@@ -10,3 +10,8 @@
 ## Wichtig für Supabase
 
 Die Datei `supabase_setup.sql` einmal im Supabase SQL Editor ausführen. Sie ergänzt die Funktion `delete_tournament`. Bestehende Turniere bleiben dabei erhalten.
+
+
+## Neu in 2.4.0
+
+Im flexiblen Generator kann die exakte Gleichverteilung der Platzarten priorisiert werden. In diesem Modus darf der Plan zusätzliche Runden und freie Felder enthalten. Die Zeitprüfung nennt die tatsächliche Endzeit und gegebenenfalls die zusätzlich benötigten Minuten bis zur Siegerehrung.
