@@ -1,28 +1,15 @@
-# Volleyball-Turnierverwaltung 2.0.0
+# Volleyball-Turnierverwaltung 2.1.0
 
-## Neu: zwei Planungsarten
+## Neu
 
-### Turnierdaten fix
-Die bewährten und geprüften Spielpläne für 9, 10, 11, 12 und 13 Dreier-Teams bleiben unverändert verfügbar.
+- Echter flexibler Turnierplan-Generator mit mathematischer Gleichverteilung der Spiele
+- Option **Keine Pause** für kurze Turniere
+- Alternativ frei wählbare große Turnierpause nach einer bestimmten Runde
+- Automatische Wechselpause vor der Finalrunde
+- Freie Feldslots werden intelligent verteilt
+- Der letzte freie Feldslot liegt möglichst in der letzten Vorrundenrunde auf dem letzten freien Feld und dient als Nachholspiel-Puffer
+- Weitere freie Slots werden möglichst gleichmäßig über den Turnierverlauf verteilt
 
-### Turnierdaten flexibel
-Frei einstellbar sind:
-- Turniername und Datum
-- Anzahl Teams (2 bis 40)
-- Teamgröße (1 bis 6 Spieler)
-- Teams je Spielseite (1 bis 3)
-- gewünschte Spiele je Team
-- Anzahl und Namen der Spielfelder
-- Turnierstart
-- Spielzeit und Wechselpause
-- Länge und Position der Turnierpause
-- Uhrzeit der Siegerehrung
-- optionale Spielernamen und Finalrunde
+## Veröffentlichung
 
-Der Generator akzeptiert einen Plan nur, wenn alle Teams exakt gleich viele Spiele erhalten. Partnerwiederholungen und häufige Gegner werden bei der Berechnung gewichtet und soweit möglich vermieden. Die Fairnessseite kontrolliert den erzeugten Plan anschließend erneut.
-
-## Aktualisierung auf GitHub Pages
-Alle Dateien dieses Ordners in das vorhandene Repository kopieren und die alten Dateien ersetzen. Eine neue Supabase-SQL-Anpassung ist nicht erforderlich, weil die zusätzlichen Einstellungen im bestehenden JSON-Datensatz des Turniers gespeichert werden.
-
-Version: 2.0.0  
-Build: 2026.07.14-15
+Alle Dateien in das GitHub-Pages-Repository hochladen und vorhandene Dateien ersetzen. Supabase muss für dieses Update nicht verändert werden.

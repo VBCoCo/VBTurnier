@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0755b5">
   <title>Volleyball-Turnierverwaltung</title>
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="styles.css?v=2.0.0">
+  <link rel="stylesheet" href="styles.css?v=2.1.0">
 </head>
 <body>
 <header class="topbar">
@@ -69,7 +69,7 @@
           <label>Spielzeit pro Partie (Min.)<input id="matchDuration" type="number" min="5" max="180" step="1" value="20"></label>
           <label>Wechselpause (Min.)<input id="changeDuration" type="number" min="0" max="60" step="1" value="10"></label>
           <label>Turnierpause (Min.)<input id="lunchDuration" type="number" min="0" max="240" step="5" value="45"></label>
-          <label>Pause nach Runde<input id="lunchAfterRound" type="number" min="1" max="99" step="1" value="5"></label>
+          <label>Turnierpause einfügen<select id="lunchAfterRound"><option value="0">Keine Pause</option></select></label>
         </div>
         <div class="actions"><button id="generateFlexible" class="primary">Flexiblen Spielplan berechnen</button></div>
         <div id="flexValidation" class="generator-status">Bitte Parameter eingeben und den Spielplan berechnen.</div>
@@ -90,10 +90,10 @@
 <section id="view-partners" class="view"><div class="section-head"><div><h2>Partner- & Gegnerübersicht</h2></div></div><div id="partners"></div></section>
 <section id="view-fairness" class="view"><div class="section-head"><div><h2>Fairnessprüfung</h2></div></div><div id="fairness"></div></section>
 </main>
-<footer><img src="ttc-logo.gif" alt="" class="footer-logo"> TTC Geltendorf · <button id="footerVersion" class="version-link">Version 2.0.0</button></footer>
+<footer><img src="ttc-logo.gif" alt="" class="footer-logo"> TTC Geltendorf · <button id="footerVersion" class="version-link">Version 2.1.0</button></footer>
 
 <div id="loginModal" class="modal" aria-hidden="true"><div class="modal-backdrop"></div><div class="modal-card login-card"><button id="loginClose" class="modal-close">×</button><div class="version-badge">Turnierverwaltung</div><h2>Bearbeitung freischalten</h2><p>Beim ersten Einsatz wird das hier eingegebene Passwort als Verwaltungskennwort eingerichtet. Das Feld ist bei jedem Aufruf zunächst leer.</p><label>Passwort<input id="loginPassword" type="password" autocomplete="current-password" placeholder="Passwort eingeben"></label><p id="loginMessage" class="login-message"></p><div class="actions"><button id="loginSubmit" class="primary">Bearbeitung freischalten</button></div></div></div>
-<div id="infoModal" class="modal" aria-hidden="true"><div class="modal-backdrop" data-close-info></div><div class="modal-card"><button id="infoClose" class="modal-close">×</button><div class="version-badge">Aktuelle Version</div><h2>Volleyball-Turnierverwaltung</h2><dl class="version-details"><div><dt>Version</dt><dd id="versionNumber">2.0.0</dd></div><div><dt>Veröffentlicht</dt><dd id="versionDate">14. Juli 2026</dd></div><div><dt>Build</dt><dd id="versionBuild">2026.07.14-15</dd></div></dl><h3>Neu in dieser Version</h3><ul class="version-changes"><li>Getrennte Planungsarten „Turnierdaten fix“ und „Turnierdaten flexibel“</li><li>Freie Teamzahl, Teamgröße 1–6 und 1–3 Teams je Spielseite</li><li>Frei wählbare Spiele je Team, Spielfelder, Startzeit, Spiel- und Wechselzeit</li><li>Flexible Turnierpause und Zeitpunkt der Pause</li><li>Mathematische Pflichtprüfung auf exakt gleiche Spielanzahl</li><li>Optimierung auf möglichst verschiedene Partner und Gegner</li><li>Automatische Prüfung gegen die Uhrzeit der Siegerehrung</li></ul><div class="actions compact"><button id="checkUpdateBtn" class="primary">Aktuelle Version neu laden</button><button id="closeInfoBtn" class="ghost">Schließen</button></div></div></div>
-<script src="config.js?v=2.0.0"></script><script src="app.js?v=2.0.0"></script>
+<div id="infoModal" class="modal" aria-hidden="true"><div class="modal-backdrop" data-close-info></div><div class="modal-card"><button id="infoClose" class="modal-close">×</button><div class="version-badge">Aktuelle Version</div><h2>Volleyball-Turnierverwaltung</h2><dl class="version-details"><div><dt>Version</dt><dd id="versionNumber">2.1.0</dd></div><div><dt>Veröffentlicht</dt><dd id="versionDate">14. Juli 2026</dd></div><div><dt>Build</dt><dd id="versionBuild">2026.07.14-16</dd></div></dl><h3>Neu in dieser Version</h3><ul class="version-changes"><li>Getrennte Planungsarten „Turnierdaten fix“ und „Turnierdaten flexibel“</li><li>Freie Teamzahl, Teamgröße 1–6 und 1–3 Teams je Spielseite</li><li>Frei wählbare Spiele je Team, Spielfelder, Startzeit, Spiel- und Wechselzeit</li><li>Turnierpause optional: „Keine Pause“ oder frei wählbar nach einer Runde</li><li>Turnierplan-Generator mit intelligent verteilten freien Feldslots</li><li>Letzter freier Feldslot als Nachholspiel-Puffer direkt vor der Finalrunde</li><li>Zusätzliche Wechselpause vor der Finalrunde</li><li>Mathematische Pflichtprüfung auf exakt gleiche Spielanzahl</li><li>Optimierung auf möglichst verschiedene Partner und Gegner</li><li>Automatische Prüfung gegen die Uhrzeit der Siegerehrung</li></ul><div class="actions compact"><button id="checkUpdateBtn" class="primary">Aktuelle Version neu laden</button><button id="closeInfoBtn" class="ghost">Schließen</button></div></div></div>
+<script src="config.js?v=2.1.0"></script><script src="app.js?v=2.1.0"></script>
 </body>
 </html>
