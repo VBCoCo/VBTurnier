@@ -33,3 +33,11 @@ Alte Turniere ohne Passwort erscheinen weiter im Auswahlmenü. Beim ersten Speic
 - **Änderungen speichern:** überschreibt den Cloud-Stand nur mit dem korrekten Passwort.
 
 Hinweis: Team- und Ergebnisänderungen werden nach erfolgreicher Freischaltung zusätzlich automatisch synchronisiert. Der ausdrückliche Speicherbutton bleibt trotzdem verfügbar.
+
+
+## Neu in Version 1.5.0
+
+- Im Turnier-Auswahlmenü stehen jetzt Turniername und tatsächliches Turnierdatum.
+- Das bisher angezeigte Aktualisierungsdatum wird nicht mehr als Turnierdatum verwendet.
+- Beim Anlegen eines neuen Turniers sind Turniername und Datum Pflicht und werden in der Cloud gespeichert.
+- Nach dem Hochladen muss `supabase_setup.sql` erneut im Supabase SQL Editor ausgeführt werden.

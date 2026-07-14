@@ -1,4 +1,4 @@
--- Version 1.4.0: Turnierauswahl und Passwortschutz
+-- Version 1.5.0: Turnierauswahl mit Turniername und tatsächlichem Turnierdatum
 -- Im Supabase SQL Editor vollstaendig ausfuehren.
 
 create extension if not exists pgcrypto;
@@ -25,14 +25,22 @@ revoke all on public.tournaments from anon, authenticated;
 
 -- Nur oeffentliche Metadaten fuer das Auswahlmenue.
 create or replace function public.list_tournaments()
-returns table(code text, name text, updated_at timestamptz)
+returns table(code text, name text, event_date date, updated_at timestamptz)
 language sql
 security definer
 set search_path = public
 as $$
-  select t.code, t.name, t.updated_at
+  select
+    t.code,
+    t.name,
+    case
+      when coalesce(t.data->>'date', '') ~ '^\d{4}-\d{2}-\d{2}$'
+      then (t.data->>'date')::date
+      else null
+    end as event_date,
+    t.updated_at
   from public.tournaments t
-  order by t.updated_at desc, t.name asc;
+  order by event_date desc nulls last, t.name asc;
 $$;
 
 -- Turnierstand darf ohne Passwort gelesen werden.
