@@ -48,3 +48,20 @@ main{max-width:1180px;margin:0 auto;padding:18px}.view{display:none}.view.active
 .score-box b{text-align:center;font-size:1.3rem}
 .result-status{text-align:center;min-height:22px;padding:0 12px 12px}
 @media(max-width:600px){.result-head{grid-template-columns:1fr 1fr 1.25fr;font-size:.82rem}.result-body{grid-template-columns:1fr;gap:12px;padding:14px}.score-box{justify-content:center;grid-row:2}.result-team.home{grid-row:1}.result-team.away{grid-row:3}.result-team{font-size:1rem}.score-box input{width:72px}.result-status{padding-bottom:14px}}
+
+/* Version 1.7.0 – TTC-Geltendorf-Design und Anzeigemodus */
+:root{--teal:#0755b5;--teal2:#063d86;--blue-soft:#eaf3ff;--bg:#f6f8fc;--text:#10283f;--muted:#607085;--line:#d8e1ec}
+.topbar{background:linear-gradient(135deg,#0b65c8,#063d86);padding-top:max(12px,env(safe-area-inset-top));box-shadow:0 5px 20px rgba(4,58,128,.18)}
+.brand{display:flex;align-items:center;gap:13px}.club-logo{width:66px;height:66px;object-fit:contain;filter:drop-shadow(0 3px 5px rgba(0,0,0,.18))}.topbar h1{font-size:1.55rem}.topbar p{font-weight:600}
+.icon-btn.always-visible{display:block}.access-badge{display:inline-flex;align-items:center;border:1px solid rgba(255,255,255,.48);background:rgba(255,255,255,.13);color:#fff;border-radius:999px;padding:7px 11px;font-size:.8rem;font-weight:800}.access-badge.viewer:before{content:'◉';margin-right:6px}.access-badge.editor:before{content:'✎';margin-right:6px}
+.nav button.active{background:var(--blue-soft);color:var(--teal2);box-shadow:inset 0 -2px 0 var(--teal)}.primary{background:linear-gradient(135deg,#0b65c8,#0755b5)}.ghost:hover{border-color:#85b7ec;color:var(--teal2)}
+.card,.match,.result-card,.team-row,.partner-card,.fair-card,.table-wrap{box-shadow:0 6px 22px rgba(6,61,134,.055)}.cloud-box{background:#f1f7ff;border-color:#cfe0f3}.stat{background:#eef5ff}.chip,th,.result-head{background:#eef5ff}.winner{color:var(--teal)}
+.match-head{font-size:.94rem;letter-spacing:.01em}.match-body{min-height:94px}.side{display:flex;flex-direction:column;justify-content:center;align-items:center}.side div{width:100%;font-size:1.03rem}.versus{text-transform:uppercase;font-size:.78rem;letter-spacing:.08em}
+.schedule-score{border-top:1px solid var(--line);display:flex;justify-content:center;align-items:center;gap:12px;padding:9px 12px;background:#f8fbff;font-weight:850;color:var(--teal2)}.schedule-score span{display:inline-grid;place-items:center;min-width:40px;padding:5px 10px;border-radius:9px;background:white;border:1px solid #c8d9ed;font-size:1.08rem}.schedule-score b{font-size:1.15rem}.schedule-score small{font-weight:750;color:var(--danger)}.schedule-score.pending{font-size:.86rem;color:var(--muted);font-weight:650}.schedule-score.draw{background:#fff7ed}
+.team-display{align-items:center}.team-display-name{font-weight:850;font-size:1.05rem}.player-display{grid-column:3/-1;color:var(--muted);font-size:.9rem}
+.viewer-mode #fillDemo,.viewer-mode #applySetup{display:none}.viewer-mode #view-teams .section-head p:after{content:' · Anzeige-Modus';color:var(--teal);font-weight:800}
+footer{display:flex;justify-content:center;align-items:center;gap:7px}.footer-logo{width:28px;height:28px;object-fit:contain}
+.version-badge{background:#e6f1ff;color:#063d86}.version-note{background:#eef5ff;border-color:#bad5f3;color:#063d86}
+@media(min-width:900px){#view-setup.active{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:18px;align-items:start}#view-setup .info-grid{margin-top:0;grid-template-columns:1fr 1fr}.hero.card{padding:26px}}
+@media(max-width:760px){.club-logo{width:52px;height:52px}.topbar h1{font-size:1.28rem}.topbar{min-height:82px}.nav{top:82px}.access-badge{display:none}.match-body{min-height:auto}.schedule-score{flex-wrap:wrap}.schedule-score small{width:100%;text-align:center}}
+@media(max-width:420px){.club-logo{width:44px;height:44px}.topbar h1{font-size:1.1rem}.topbar p{font-size:.82rem}.side div{font-size:.93rem}.match-head{font-size:.82rem}.match-body{grid-template-columns:minmax(0,1fr) 46px minmax(0,1fr)}}

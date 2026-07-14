@@ -1,3 +1,12 @@
+# Volleyball-Turnierverwaltung – Version 1.7.0
+
+## Neu
+- TTC-Geltendorf-Logo und blaues Vereinsdesign
+- Anzeige-Modus ohne Passwort: Ergebnisseingabe, Partner und Fairness werden ausgeblendet
+- Ergebnisse werden direkt im Spielplan angezeigt
+- Teamansicht ist im Anzeige-Modus schreibgeschützt
+- Version/Build: 1.7.0 / 2026.07.14-7
+
 # Volleyball-Turnierverwaltung 1.4.0
 
 ## Neue Funktionen
