@@ -40,14 +40,24 @@
         </div>
         <div class="cloud-box">
           <h3>Gemeinsamer Turnierstand</h3>
-          <p>Mit demselben Turniercode greifen mehrere Geräte auf denselben Stand zu.</p>
+          <p>Vorhandenes Turnier auswählen oder ein neues anlegen. Das Passwort schützt Änderungen; zum bloßen Ansehen ist kein Passwort erforderlich.</p>
           <div class="grid two">
-            <label>Turniercode<input id="tournamentCode" placeholder="z. B. GELTENDORF-2026" autocapitalize="characters"></label>
+            <label>Vorhandenes Turnier
+              <select id="tournamentSelect"><option value="">Turnier auswählen …</option></select>
+            </label>
+            <label>Bearbeitungspasswort
+              <input id="tournamentPassword" type="password" autocomplete="current-password" placeholder="Passwort zum Speichern">
+            </label>
+            <label>Code für neues Turnier
+              <input id="tournamentCode" placeholder="z. B. GELTENDORF-2026" autocapitalize="characters">
+            </label>
             <div class="cloud-status-wrap"><span id="cloudStatus" class="cloud-status">Nur lokal</span></div>
           </div>
           <div class="actions compact">
-            <button id="cloudConnect" class="ghost">Turnier laden</button>
-            <button id="cloudSave" class="ghost">Turnier speichern</button>
+            <button id="refreshTournaments" class="ghost">Liste aktualisieren</button>
+            <button id="cloudConnect" class="ghost">Ausgewähltes Turnier laden</button>
+            <button id="cloudCreate" class="ghost">Neues Turnier anlegen</button>
+            <button id="cloudSave" class="ghost">Änderungen speichern</button>
           </div>
         </div>
         <div class="actions">
@@ -89,7 +99,7 @@
     </section>
   </main>
 
-  <footer>Lokale Speicherung auf diesem Gerät · optional gemeinsame Cloud-Synchronisierung · <button id="footerVersion" class="version-link" type="button">Version 1.3.0</button></footer>
+  <footer>Lokale Speicherung auf diesem Gerät · optional gemeinsame Cloud-Synchronisierung · <button id="footerVersion" class="version-link" type="button">Version 1.4.0</button></footer>
 
   <div id="infoModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
     <div class="modal-backdrop" data-close-info></div>
@@ -98,15 +108,15 @@
       <div class="version-badge">Aktuelle Version</div>
       <h2 id="infoTitle">Volleyball-Turnierverwaltung</h2>
       <dl class="version-details">
-        <div><dt>Version</dt><dd id="versionNumber">1.3.0</dd></div>
+        <div><dt>Version</dt><dd id="versionNumber">1.4.0</dd></div>
         <div><dt>Veröffentlicht</dt><dd id="versionDate">14. Juli 2026</dd></div>
-        <div><dt>Build</dt><dd id="versionBuild">2026.07.14-1</dd></div>
+        <div><dt>Build</dt><dd id="versionBuild">2026.07.14-2</dd></div>
       </dl>
       <h3>Neu in dieser Version</h3>
       <ul class="version-changes">
-        <li>Explizite Schaltflächen zum Laden und Speichern eines Turniers über den Turniercode</li>
-        <li>Turniername, Datum und Teamzahl bleiben beim Seitenwechsel stabil gespeichert</li>
-        <li>Für 10 bis 13 Teams: 20 Minuten Spielzeit und 10 Minuten Wechselpause</li>
+        <li>Auswahlmenü für alle vorhandenen Cloud-Turniere</li>
+        <li>Passwortschutz für Anlegen und Ändern eines Turniers</li>
+        <li>Öffentliches Lesen bleibt möglich; Speichern nur mit korrektem Passwort</li>
       </ul>
       <p class="version-note">Stimmen Version und Build mit der veröffentlichten Fassung überein, ist die aktuelle Live-Version geladen.</p>
       <div class="actions compact">

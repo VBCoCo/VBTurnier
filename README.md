@@ -1,31 +1,35 @@
-# Volleyball-Turnierverwaltung – Version 1.3.0
+# Volleyball-Turnierverwaltung 1.4.0
 
-## Veröffentlichung auf GitHub Pages
+## Neue Funktionen
 
-Den gesamten Inhalt dieses Ordners in das bestehende GitHub-Repository hochladen und die vorhandenen Dateien ersetzen. Danach in der App über das Info-Symbol prüfen:
+- Auswahlmenü mit allen vorhandenen Cloud-Turnieren
+- Turniere können ohne Passwort geladen und angesehen werden
+- Anlegen und Speichern ist nur mit dem Turnierpasswort möglich
+- Das Passwort wird nicht in der Datenbank im Klartext gespeichert
+- Das eingegebene Passwort bleibt nur für die aktuelle Browser-Sitzung erhalten
 
-- Version: 1.3.0
-- Build: 2026.07.14-1
+## Update auf GitHub Pages
 
-## Turnier laden
+Alle Dateien dieses Ordners in das bestehende GitHub-Repository hochladen und die bisherigen Dateien ersetzen.
 
-1. Auf der Startseite den Turniercode eingeben.
-2. **Turnier laden** drücken.
-3. Der gespeicherte Turniername, das Datum, die Teamzahl, Teams und Ergebnisse werden aus Supabase geladen.
+## Supabase unbedingt aktualisieren
 
-## Turnier speichern
+1. Supabase öffnen.
+2. Zum **SQL Editor** wechseln.
+3. Den vollständigen Inhalt von `supabase_setup.sql` ausführen.
+4. `config.js` mit der vorhandenen Supabase-URL und dem Anon-Key beibehalten.
 
-1. Turniername, Datum, Teamzahl und Turniercode eintragen oder ändern.
-2. **Turnier speichern** drücken.
-3. Die Daten werden lokal und in Supabase gespeichert; anschließend öffnet sich die Teamseite.
+Die SQL-Datei sperrt direkte Tabellenänderungen und stellt nur kontrollierte Funktionen bereit. Das Bearbeitungspasswort wird mit `pgcrypto` gehasht.
 
-Die Schaltfläche **Nur lokal speichern & Teams öffnen** speichert nur auf dem gerade verwendeten Gerät.
+## Bestehende Turniere
 
-## Zeitmodell
+Alte Turniere ohne Passwort erscheinen weiter im Auswahlmenü. Beim ersten Speichern wird das eingegebene Passwort als Schutz gesetzt. Danach kann nur noch mit diesem Passwort gespeichert werden.
 
-- 9 Teams: 30 Minuten Spielzeit, 5 Minuten Wechselpause
-- 10 bis 13 Teams: 20 Minuten Spielzeit, 10 Minuten Wechselpause
+## Bedienung
 
-## Supabase
+- **Liste aktualisieren:** lädt alle vorhandenen Turniere.
+- **Ausgewähltes Turnier laden:** öffnet den gemeinsamen Stand. Ohne Passwort nur lesbar.
+- **Neues Turnier anlegen:** verwendet Turniername, neuen Code und Passwort. Das Passwort muss mindestens sechs Zeichen lang sein.
+- **Änderungen speichern:** überschreibt den Cloud-Stand nur mit dem korrekten Passwort.
 
-Die bestehende `config.js` mit Supabase-URL und öffentlichem Anon-Key unverändert weiterverwenden. Falls die Datenbank noch nicht eingerichtet ist, `supabase_setup.sql` einmal im SQL-Editor des Supabase-Projekts ausführen.
+Hinweis: Team- und Ergebnisänderungen werden nach erfolgreicher Freischaltung zusätzlich automatisch synchronisiert. Der ausdrückliche Speicherbutton bleibt trotzdem verfügbar.
