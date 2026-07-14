@@ -1,21 +1,11 @@
-# Volleyball-Turnierverwaltung 1.8.0
+# Volleyball-Turnierverwaltung 1.9.0
 
-## Wichtiges Update in Supabase
+## Neu
+- Öffentliche Startseite blendet Verwaltungsfelder zuverlässig aus.
+- Mittagspause beträgt 45 Minuten; alle Nachmittagsrunden beginnen 15 Minuten früher.
+- Optionale Finalrunde in den Turnierdaten.
+- Kleines Finale: Tabellenposition 5 + 8 gegen 6 + 7.
+- Finale: Tabellenposition 1 + 4 gegen 2 + 3.
+- Beide Finalspiele dauern 20 Minuten, dazwischen liegen 5 Minuten Pause.
 
-1. Öffne den SQL Editor deines Supabase-Projekts.
-2. Führe die Datei `supabase_setup.sql` vollständig aus.
-3. Lade anschließend alle Dateien dieses Ordners zu GitHub Pages hoch.
-
-## Neues Bedienkonzept
-
-- Die öffentliche Startseite zeigt nur Turniere, bei denen **„In der öffentlichen Anzeige sichtbar“** aktiviert ist.
-- Über **Login** wird die zentrale Bearbeitung freigeschaltet.
-- Beim allerersten Login wird das eingegebene Passwort als Verwaltungskennwort eingerichtet.
-- Das Passwort gilt anschließend für alle Turniere und kann im Bearbeitungsmodus geändert werden.
-- Mit **Zur Anzeige** wird die Verwaltung wieder gesperrt.
-
-
-## Version 1.8.1
-- Öffentliche Startseite zeigt ausschließlich freigegebene Turniere und den Login.
-- Verwaltungsbereich und Passwortänderung sind vor dem Login vollständig verborgen.
-- Der technische Turniercode wird automatisch erzeugt und nicht mehr angezeigt.
+Keine neue Supabase-SQL-Anpassung erforderlich, da die Option in den Turnierdaten gespeichert wird.
